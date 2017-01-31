@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Anderson Assignment 3</title>
+</head>
+
+<style>
+   H2 {color:#272727;
+	   margin-bottom: 0px;
+	   text-align: center;
+   }
+   H5 {color:#272727;
+	   margin-top: 5px;
+	   text-align: center;
+   }
+   H3 {
+    color: #4D4B4C;
+   }
+   .link {
+		margin: 10px;
+		padding: 10px;
+
+   }
+   .link-center {
+   	text-align: center;
+   }
+</style>
+
+<body>
+	<h2>LA 558 Web Mapping &ndash; Assignment 3</h2>
+  
+<div class="link-center">
+  	
+<h3>Bailey Anderson</h3>
+	<img id="baseMap" src="images/basemapStreets.png"  alt="basemapLandcover" width="600" height="400">
+  <br>
+  <a href="#" onclick="changeMap('basemapStreets')" class="link">Basemap</a>
+    <a href="#" onclick="changeMap('scenicByways_border')"class="link">Scenic Byways Border</a>
+    <a href="#" onclick="changeMap('bedBreakfast')" class="link">Bed &amp; Breakfast</a>
+    <a href="#" onclick="changeMap('canoeRoutes')" class="link">Canoe Routes</a>
+    <a href="#" onclick="changeMap('vineyards')" class="link">Vineyards</a> 
+</div>
+
+</body>
+<script>
+    function changeMap(x) {
+      document.getElementById("baseMap").src="images/"+ x + ".png"; 
+    }
+    //changeMap("basemapStreets");
+</script>
+</html>
