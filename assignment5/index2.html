@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Anderson Assignment 4</title>
+</head>
+
+<style>
+   
+   .link {
+		margin: 10px;
+		padding: 10px;
+
+   }
+   .center {
+   	text-align: center;
+   }
+   .embed-container {position: relative; padding-bottom: 87%; height: 0; max-width: 100%;} .embed-container iframe, .embed-container object, .embed-container iframe{position: absolute; top: 0; left: 0; width: 100%; height: 100%;} small{position: absolute; z-index: 40; bottom: 0; margin-bottom: -15px;}
+</style>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<body>
+  <div class="container">
+    <div class="row">
+      <nav class="navbar navbar-inverse">
+     <h3 class="pull-right text-muted">Assignment 5 - Javascript Playground #2</h3>
+      </nav>
+      <div class="col-sm-6">
+        <label for="team">Which Iowa state school team is your favorite?</label>
+        <div class="radio">
+          <label>
+            <input type="radio" name="team" id="uni" value="Go Panthers!" >
+            UNI
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="team" id="iaState" value="Go Cyclones!" >
+            Iowa State
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="team" id="iowa" value="Go Hawkeyes!" >
+            Iowa
+          </label>
+        </div>
+        
+          <button type="button" class="btn btn-default" onclick="displayFunction()">Enter</button>
+      </div>
+      <div class="col-sm-6">
+        <h3 id="school" class=""></h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <label for="">Who is your favorite mascot?</label>
+        <input type="text" id="mascotName" placeholder="Enter mascot name" class="form-control">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" name="mascotShow" id="mascot" onclick="if(this.checked){myFunction()}"> View Mascot
+            </label>
+          </div>
+         
+      </div>
+    </div>
+  </div>
+  
+ <div class="row">
+   <div class="col-sm-4">
+     
+     <div class="embed-container"><iframe width="300" height="260" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" title="Iowa Latino/Hispanic 2010 Census" src="//www.arcgis.com/apps/Embed/index.html?webmap=36fe265c3f774c579dd900d553782edf&amp;extent=-96.6779,40.9718,-89.9323,43.6522&amp;zoom=true&amp;scale=true&amp;disable_scroll=true&amp;theme=light"></iframe></div>
+   </div>
+ </div>
+</body>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script>
+    function displayFunction() {
+  
+
+if (document.getElementById('uni').checked) {
+  team = document.getElementById('uni').value;
+  
+}
+else if (document.getElementById('iaState').checked) {
+  team = document.getElementById('iaState').value;
+  
+}
+else  {
+  team = document.getElementById('iowa').value;
+}
+document.getElementById('school').innerHTML = team;
+  
+}
+
+function myFunction() {
+  window.alert(document.getElementById('mascotName').value);
+}
+  
+
+</script>
+</html>
