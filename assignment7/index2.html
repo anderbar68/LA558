@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Anderson Assignment 7</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous">
+  </script>
+</head>
+
+<style>
+   H2 {color:#272727;
+	   margin-bottom: 0px;
+	   text-align: center;
+   }
+   H5 {color:#272727;
+	   margin-top: 5px;
+	   text-align: center;
+   }
+   H3 {
+    color: #4D4B4C;
+   }
+   .link {
+		margin: 10px;
+		padding: 10px;
+
+   }
+   .link-center {
+   	text-align: center;
+   }
+   .menu {
+    
+   }
+</style>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <nav class="navbar navbar-inverse">
+     <h3 class="pull-right text-muted titleHead">Assignment 7 - JQuery Redux </h3>
+      </nav>
+    </div>
+    <div class="row">
+      <div class="col-sm-4 menu">
+        <h3>Map Layers</h3>
+        <a href="#" onclick="changeMap('basemapStreets')" class="link">Basemap</a><br>
+        <a href="#" onclick="changeMap('scenicByways_border')"class="link">Scenic Byways Border</a><br>
+        <a href="#" onclick="changeMap('bedBreakfast')" class="link">Bed &amp; Breakfast</a><br>
+        <a href="#" onclick="changeMap('canoeRoutes')" class="link">Canoe Routes</a><br>
+        <a href="#" onclick="changeMap('vineyards')" class="link">Vineyards</a> <br>
+      </div>
+      <div class="col-sm-8">
+        <img id="baseMap" src="images/basemapStreets.png"  alt="basemapLandcover" width="600" height="400">
+      </div>
+    </div>
+  </div>
+  
+
+
+</body>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script>
+    function changeMap(x) {
+      document.getElementById("baseMap").src="images/"+ x + ".png"; 
+    }
+    //changeMap("basemapStreets");
+</script>
+</html>
