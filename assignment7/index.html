@@ -57,6 +57,20 @@
     <div class="row">
       <div class="col-sm-4 menu">
         <h3>Map Layers</h3>
+        <div class="radio">
+        <label>
+          <input type="radio" name="basemap" id="" value="1" checked>
+          Street Basemap
+        </label>
+      </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="basemap" id="" value="0" >
+            Topo Basemap
+          </label>
+        </div>
+        <hr>
+
         <div class="checkbox">
           <label>
             <input type="checkbox" class="js-mapLayer" value="2"> Scenic Byways Border
@@ -80,7 +94,8 @@
       </div>
       <div class="col-sm-8">
         <div id="map">
-            <img class="js-map" id="map1" src="images/basemapStreets.png"  alt="basemapLandcover" width="600" height="400">
+            <img class="js-map" id="map0" src="images/basemapLandcover.png" alt="basemapLandcover" width="600" height="400">
+            <img class="js-map" id="map1" src="images/basemapStreets.png"  alt="basemapStreets" width="600" height="400">
             <img class="js-map" id="map2" src="images/scenicByways_border.png"  alt="scenic" width="600" height="400">
             <img class="js-map" id="map3" src="images/bedBreakfast.png"  alt="bedBreakfast" width="600" height="400">
             <img class="js-map" id="map4" src="images/canoeRoutes.png"  alt="canoe routes" width="600" height="400">
@@ -98,13 +113,20 @@
   $(document).ready(function(){
     $("#map1").show();
 
+    //toggle basemap
+    $('input:radio[name=basemap]').click(function() {
+    base = $('input:radio[name=basemap]:checked').val();
+    $("#map0, #map1").hide(); //combined selectors in one line
+    $("#map" + base).show();
+    });
+
     //toggle layers
     $(".js-mapLayer").change(function(){
       x = $(this).val();
       console.log("map"+ x);
       $("#map" + x).toggle();
+      });
     });
-  });
 
     /*
     function changeMap(x) {
