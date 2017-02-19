@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Anderson Assignment 8 </title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous">
+  </script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" /> <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+</head>
+
+<style>
+   H2 {color:#272727;
+	   margin-bottom: 0px;
+	   text-align: center;
+   }
+   H5 {color:#272727;
+	   margin-top: 5px;
+	   text-align: center;
+   }
+   H3 {
+    color: #4D4B4C;
+   }
+   
+   #map {
+     width: 500px;
+     height: 400px;
+  }
+   .link-center {
+   	text-align: center;
+   }
+   
+    .titleHead {
+    padding: 10px;
+   }
+   .link {
+    margin: 10px;
+   }
+</style>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <nav class="navbar navbar-inverse">
+     <h3 class="pull-right text-muted titleHead">Assignment 8 - Leaflet Markers/Circles </h3>
+      </nav>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <h3 class="link-center">My favorite places of Austurias, Spain</h3>
+
+        <div id="map">
+           
+        </div>
+       
+      </div><!--end col-sm-6-->
+    </div><!--end row-->
+  </div>
+  
+
+
+</body>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script>
+  $(document).ready(function(){
+    var map = L.map('map').setView([43.36, -5.845], 9);
+
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    var marker1 = L.marker([43.362583, -5.843081]).addTo(map)
+         
+
+    var marker2 = L.marker([43.563611, -6.034722], {
+          title: 'Oviedo Airport',
+          opacity: 0.8
+    }).addTo(map);
+
+     var marker3 = L.marker([43.383333, -5.866667], {
+          title: 'El Cristo (Christ) Statue',
+          draggable: true
+    }).addTo(map);
+
+     marker1.bindPopup("Oviedo Cathedral City Center").openPopup();
+      
+     marker2.bindPopup("Oviedo Airport").openPopup();
+      
+     marker3.bindPopup("El Cristo Statue").openPopup();
+
+     //marker denoting my favorite park in green
+     var circle = L.circle([43.361717, -5.850186], 300, {
+      color: '#006400',
+      fillOpacity: 0.8
+     }).addTo(map);
+     circle.bindPopup("Parque San Francisco").openPopup();
+
+      //marker denoted of a museum in purple
+     var circle2 = L.circle([43.367694, -5.83725], 220, {
+      color: '#2E0854',
+      fillOpacity: 0.7,
+      opacity: 0.7
+     }).addTo(map);
+     circle2.bindPopup("Museum of Oviedo").openPopup();
+
+    //city markers denoted by red circle markers
+    var circleMarker = L.circleMarker([43.388056, -6.073611], {
+      radius: 8,
+      color: '#800020',
+      opacity: 0.3,
+      fillOpacity: 0.5
+     }).addTo(map);
+     circleMarker.bindPopup("City of Grado").openPopup();
+
+    var circleMarker2 = L.circleMarker([43.533333, -5.7], {
+      radius: 15,
+      color: '#800020',
+      opacity: 0.3,
+      fillOpacity: 0.5
+     }).addTo(map);
+    circleMarker2.bindPopup("City of Gijon").openPopup();
+
+    var circleMarker3 = L.circleMarker([43.556111, -5.908333], {
+      radius: 11,
+      color: '#800020',
+      opacity: 0.3,
+      fillOpacity: 0.5
+     }).addTo(map);
+    circleMarker3.bindPopup("City of Aviles").openPopup();
+    
+    /*
+    $("#cf").click(function(){
+        map.setView(new L.LatLng(42.52352, -92.446402),12);
+    });
+     $("#dsm").click(function(){
+        map.setView(new L.LatLng(41.590833, -93.620833),12);
+    });*/
+  });
+
+   
+</script>
+</html>
