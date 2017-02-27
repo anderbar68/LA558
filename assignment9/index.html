@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Anderson Assignment 9 </title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous">
+  </script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" /> <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+</head>
+
+<style>
+   H2 {color:#272727;
+	   margin-bottom: 0px;
+	   text-align: center;
+   }
+   H5 {color:#272727;
+	   margin-top: 5px;
+	   text-align: center;
+   }
+   H3 {
+    color: #4D4B4C;
+   }
+   
+   #map {
+     width: 500px;
+     height: 400px;
+  }
+   .link-center {
+   	text-align: center;
+   }
+   
+    .titleHead {
+    padding: 10px;
+   }
+   .title {
+    margin-left: 60px;
+   }
+   
+    .ellisIsland .leaflet-popup-content {
+     color: blue;
+    }
+    .brooklyn .leaflet-popup-content {
+     color: red;
+    }
+    .leaflet-div-icon {
+      text-align: center;
+      background-color: #e9e9e9;
+    }
+</style>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <nav class="navbar navbar-inverse">
+     <h3 class="pull-right text-muted titleHead">Assignment 9 - Custom Icons, Popups, and Markers</h3>
+      </nav>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <h3 class="title">My favorite places of New York City</h3>
+
+        <div id="map">
+           
+        </div>
+       
+      </div><!--end col-sm-6-->
+    </div><!--end row-->
+  </div>
+  
+
+
+</body>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script>
+  $(document).ready(function(){
+    var map = L.map('map').setView([40.7127, -74.0059], 11);
+
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    
+         
+
+    var marker2 = L.marker([40.699398, -74.041723], {
+          title: 'Ellis Island',
+          opacity: 1
+    }).addTo(map);
+
+     //test custom icon
+     /*var marker3 = L.marker([40.70569, -73.99639], {
+          title: 'Brooklyn Bridge',
+          opacity: 0.5,
+          draggable: true
+    }).addTo(map);
+    marker3.bindPopup("Brooklyn Bridge").openPopup();
+*/
+
+    
+      
+     marker2.bindPopup("Ellis Island<br>Home of the Statue of Liberty",{
+      maxWidth: 200, 
+      minWidth: 170, 
+      maxHeight: 40, 
+      autoPan: true, 
+      keepInView: true,
+      className: 'ellisIsland',
+      closeButton: true, 
+      //autoPanPadding: [25, 5],
+});
+
+marker2.openPopup();
+
+      
+     
+
+     //custom icon
+     var redIcon = L.icon({
+          iconUrl: 'http://www.google.com/mapfiles/marker.png',
+          shadowUrl: 'http://www.google.com/mapfiles/shadow50.png',
+
+          iconSize:     [20, 34], // size of the icon
+          shadowSize:   [37, 34], // size of the shadow
+          iconAnchor:   [10, 34], // point of the icon which will correspond to marker's location
+          shadowAnchor: [10, 34],  // the same for the shadow
+          popupAnchor:  [0, -20] // point from which the popup should open relative to the iconAnchor
+      });
+
+      var marker4 = L.marker([40.70569, -73.99639], {
+        icon: redIcon,
+        title: "<strong>Brooklyn Bridge</strong>",
+        opacity: 1
+      }).addTo(map);
+
+      marker4.bindPopup("<strong>Brooklyn Bridge</strong>", {
+        className:'brooklyn',
+        keepInView:true
+      }).openPopup();
+
+   //add circle markers
+   var myCircles = [
+    ["25",40.719141, -73.997327,"Neighborhood"],
+    ["25",40.714722, -73.997222,"Neighborhood"],
+    ["25",40.747, -73.987,"Neighborhood"],
+    ["20",40.782222, -73.965278,"Park"],
+    ["20",40.6975, -73.999167,"Park"],
+    ["15",40.77891, -73.96367,"Museum"],
+    ["15",40.711694, -74.013611,"Museum"],
+    ["25",40.703717, -74.016094,"Park"],
+    ["25",40.704167, -74.049167,"Park"],
+    ["10",40.694861, -73.992778,"Museum"],
+    ];
+  
+  //set color of marker
+    function getColor(x) {
+      return  x == 'Neighborhood' ? '#9370DB' :
+              x == 'Park' ? "#8B008B" :
+              x == 'Museum' ? "#DDA0DD" :
+               "#FFFFFF"; //white
+    }
+  
+  for (var i = 0; i < myCircles.length; i++) {
+    marker = new L.circleMarker([myCircles[i][1],myCircles[i][2]], {
+      radius: myCircles[i][0]/2,
+      fillColor: getColor(myCircles[i][3]), 
+      color: "#000",
+      weight: 0,
+      opacity: 1,
+      fillOpacity: 0.9    
+    })
+    .bindPopup("Attraction: "+myCircles[i][3]) //note there is no comma here
+    .addTo(map);
+    }
+    //div icon
+    var myDivIcon1 = L.divIcon({
+      iconSize: new L.Point(50,20),
+      html: 'Robertas',
+      className: 'leaflet-div-icon'
+    });
+    var marker1 = L.marker([40.704949, -73.93344], {
+      icon:myDivIcon1,
+    }).addTo(map).bindPopup("My favorite restaurant");
+
+  });
+
+   
+</script>
+</html>
