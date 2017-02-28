@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Anderson Assignment 10</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous">
+  </script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" /> <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+</head>
+
+<style>
+   H2 {color:#272727;
+	   margin-bottom: 0px;
+	   text-align: center;
+   }
+   H5 {color:#272727;
+	   margin-top: 5px;
+	   text-align: center;
+   }
+   H3 {
+    color: #4D4B4C;
+   }
+   
+   #map {
+     width: 500px;
+     height: 400px;
+  }
+   .link-center {
+   	text-align: center;
+   }
+   
+    .titleHead {
+    padding: 10px;
+   }
+   .link {
+    margin: 30px;
+    margin-top: 10px;
+   }
+</style>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <nav class="navbar navbar-inverse">
+     <h3 class="pull-right text-muted titleHead">Assignment 10 - Leaflet Playground </h3>
+      </nav>
+    </div>
+    <div class="row">
+      <div class="col-md-6 ">
+        <div id="map">
+           
+        </div>
+        <a href="#" id="dsm" class="link">Des Moines</a>
+       <a href="#" id="cf" class="link">Cedar Falls</a>
+       
+      </div><!--end col-sm-6-->
+      <div class="col-sm-6">
+        <p>I used an <strong>alternative document ready function</strong> to initialize the map. On mapload, you are seeing my hometown of Webster City and a few markers. When you click the other marker's link for additional info, you will <strong>see special information about that marker.</strong></p>
+        <p>By clicking the link for Des Moines, <strong>the map view changes</strong> and a marker <strong>tooltip is created and opens</strong> showing the location of one of my favorite places to walk.</p>
+        <p>By clicking the Cedar Falls link, the map changes again, and <strong>upon clicking the link in the marker</strong> you are taken to UNI's webpage.</p>
+      </div>
+    </div><!--end row-->
+  </div>
+  
+
+
+</body>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script>
+$(document).ready(function() {
+  init_map();
+});
+var map;
+
+//create the map
+function init_map() {
+  map = L.map('map').setView([42.466389, -93.820556], 9);
+  L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+    maxZoom: 18
+  }).addTo(map);
+}
+  $(document).ready(function(){
+
+    var marker = L.marker([42.3105, -93.9361]).addTo(map);
+      marker.bindPopup($('<a href="#" class="">View Info</a>').click(function() {
+          alert("This is my favorite running trail");
+      })[0]);
+
+    var marker1 = L.marker([42.466389, -93.820556]).addTo(map)
+     marker1.bindPopup("My Hometown").openPopup();
+
+    $("#dsm").click(function(){
+        map.setView(new L.LatLng(41.590833, -93.620833),12);
+        var marker3 = L.marker([41.585217, -93.616329], {
+          opacity: .8
+        }).addTo(map)
+        marker3.bindTooltip("Principal Riverwalk").openTooltip();
+    });
+    $("#cf").click(function(){
+        map.setView(new L.LatLng(42.52352, -92.446402),12);
+        var marker2 = L.marker([42.513361, -92.462482]).addTo(map)
+        marker2.bindPopup('<a href="http://www.uni.edu" target="_blank">University of Northern Iowa</a>').openPopup();
+    });
+    
+          
+     
+  });
+
+   
+</script>
+</html>
