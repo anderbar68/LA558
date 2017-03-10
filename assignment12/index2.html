@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Anderson Assignment 12</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous">
+  </script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" /> <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+</head>
+
+<style>
+   H2 {color:#272727;
+	   margin-bottom: 0px;
+	   text-align: center;
+   }
+   H5 {color:#272727;
+	   margin-top: 5px;
+	   text-align: center;
+   }
+   H3 {
+    color: #4D4B4C;
+   }
+   
+   #map {
+     width: 600px;
+     height: 500px;
+  }
+   .link-center {
+   	text-align: center;
+   }
+   
+    .titleHead {
+    padding: 10px;
+   }
+   .link {
+    margin: 30px;
+    margin-top: 10px;
+   }
+</style>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <nav class="navbar navbar-inverse">
+     <h3 class="pull-right text-muted titleHead">Assignment 12 - JSON/GeoJSON, practicing with Leaflet</h3>
+      </nav>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div id="map">
+           
+        </div>
+        
+      </div><!--end col-sm-6-->
+      
+    </div><!--end row-->
+  </div>
+  
+
+
+</body>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script>
+
+  $(document).ready(function(){
+
+  
+    //JSON 
+    var cities = [{
+        "name" : "New York City",
+        "lat" : "40.71",
+        "long" : "-74.00",
+        "iconColor" : "0000ff",
+        "popupText" : "I just traveled here for work"
+    },
+    {
+        "name" : "Des Moines",
+        "lat" : "41.59",
+        "long" : "-93.62",
+        "iconColor" : "ff0000",
+        "popupText" : "The city is located in Iowa"
+    }];
+
+    //Base Layers
+    var OSM = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+    maxZoom: 18
+    });
+
+    var Stamen_Watercolor = L.tileLayer('http://{s}.tile.stamen.com/watercolor/{z}/{x}/{y}.png', {
+        attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+        subdomains: 'abcd',
+        minZoom: 1,
+        maxZoom: 16
+      });
+
+    //create the map
+    var map = L.map('map', {
+            center: new L.LatLng(42.0908, -93.6208),
+            zoom: 4,
+            layers: [OSM]
+    });
+
+        //layer control
+        var baseMaps = {
+          "Watercolor": Stamen_Watercolor,
+           "OpenStreetMap": OSM,
+        };
+              
+        
+      
+        L.control.layers(baseMaps).addTo(map);
+        });
+  
+    //Adding JSON to map
+
+var iconMarkerURL = "http://www.googlemapsmarkers.com/v1/";
+
+ for (var i = 0; i < cities.length; i++) {
+
+  //access the data by index i   for example 
+  console.log(cities[i].name);
+  
+  var marker = L.marker([cities[i].lat, cities[i].long], {    
+    icon: L.icon({
+      iconUrl: iconMarkerURL + cities[i].iconColor,
+      iconSize:[10, 17],
+      iconAnchor:[5, 17],
+      popupAnchor:[0, -20]
+    }),
+    title: cities[i].name
+  }).bindPopup("<b>"+cities[i].name+"</b><br>"+cities[i].popupText+".").addTo(map);
+}
+   
+</script>
+</html>
