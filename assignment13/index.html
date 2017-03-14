@@ -2,7 +2,7 @@
 <html>
 <head>
 
-<title>Anderson Assignment 12</title>
+<title>Anderson Assignment 13</title>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
@@ -50,7 +50,7 @@
   <div class="container">
     <div class="row">
       <nav class="navbar navbar-inverse">
-     <h3 class="pull-right text-muted titleHead">Assignment 12 - JSON/GeoJSON, practicing with Leaflet</h3>
+     <h3 class="pull-right text-muted titleHead">Assignment 13</h3>
       </nav>
     </div>
     <div class="row">
@@ -70,7 +70,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script>
 
-  $(document).ready(function(){
+ 
 
   var map = L.map('map').setView([-93.615, 41.837], 7);
 // add an OpenStreetMap tile layer
@@ -80,16 +80,15 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 $.each(JSON.parse(locations), function (idx, obj) {
-    var marker = L.marker([obj.latitude, obj.longitude], {
-        title: obj.title,
+    var marker = L.marker([obj.coordinates], {
         opacity: 1,
         riseOnHover: true
     }).addTo(map);
-    marker.bindPopup(obj.description);
+    marker.bindPopup(obj.name);
 });
 
    
 
-});  
+
 </script>
 </html>
