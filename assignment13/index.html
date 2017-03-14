@@ -11,7 +11,9 @@
   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
   crossorigin="anonymous">
   </script>
+
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" /> <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+  <script src="https://anderbar68.github.io/LA558/assignment13/iowaCounties.json"></script>
 </head>
 
 <style>
@@ -70,162 +72,23 @@
 
   $(document).ready(function(){
 
-  
-    //JSON 
-    var cities = [{
-        "name" : "New York City",
-        "lat" : "40.71",
-        "long" : "-74.00",
-        "popupText" : "New York City"
-    },
-    {
-        "name" : "Des Moines",
-        "lat" : "41.59",
-        "long" : "-93.62",
-        "popupText" : "Des Moines"
-    }];
-
-    
-
-    //Base Layers
-    var OSM = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+  var map = L.map('map').setView([-93.615, 41.837], 7);
+// add an OpenStreetMap tile layer
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: 'LA558 lecture 22',
     maxZoom: 18
-    });
+}).addTo(map);
 
-    var Stamen_Watercolor = L.tileLayer('http://{s}.tile.stamen.com/watercolor/{z}/{x}/{y}.png', {
-        attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
-        subdomains: 'abcd',
-        minZoom: 1,
-        maxZoom: 16
-      });
-    var ames = L.marker([42.034722, -93.62]).bindPopup('Ames'),
-        cedarFalls    = L.marker([42.52352, -92.446402]).bindPopup('Cedar Falls'),
-        fortDodge    = L.marker([42.506667, -94.180278]).bindPopup('Fort Dodge');
-
-    var iowaCities = L.layerGroup([ames, cedarFalls, fortDodge]);
-
-    var dallas = L.marker([32.775833, -96.796667]).bindPopup('Dallas')
-    var texas = L.layerGroup([dallas]);
-
-    var glacier = L.circleMarker([48.696667, -113.718333], {
-      color: "#006400",
-      radius: 20
-    }).bindPopup('Glacier'),
-        arches = L.circleMarker([38.68333, -109.56667], {
-           color: "#006400",
-      radius: 15
-        }).bindPopup('Arches');
-        
-
-    var parks = L.layerGroup([glacier, arches]);
-    //create the map
-    var map = L.map('map', {
-            center: new L.LatLng(42.0908, -93.6208),
-            zoom: 4,
-            layers: [OSM]
-    });
-
-        //layer control
-        var baseMaps = {
-          "Watercolor": Stamen_Watercolor,
-           "OpenStreetMap": OSM,
-        };
-        var overlayMaps = {
-          "Some Iowa Cities": iowaCities,
-          "Some National Parks": parks,
-          "Dallas, Texas": dallas
-        };      
-
-        L.control.layers(baseMaps, overlayMaps).addTo(map);
-
-    //Adding JSON to map
-     for (var i = 0; i < cities.length; i++) {
-
-      var marker = L.marker([cities[i].lat, cities[i].long], {    
-        title: cities[i].name
-      }).bindPopup("<b>"+cities[i].name+"</b><br>"+cities[i].popupText+".").addTo(map);
-    }
-
-    //GeoJSON showing markers and line of the Yellowstone roadtrip
-    var myGeoJSON = [
-    {
-  "type": "FeatureCollection",
-  "features": [
-    {
-      "type": "Feature",
-      "properties": {
-        "marker-color": "#14f409",
-        "marker-size": "medium",
-        "marker-symbol": "park"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -110.4345703125,
-          44.465151013519616
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "marker-color": "#10ed31",
-        "marker-size": "medium",
-        "marker-symbol": "park"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -103.4033203125,
-          44.276671273775186
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {},
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -94.89990234375,
-          41.5579215778042
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {},
-      "geometry": {
-        "type": "LineString",
-        "coordinates": [
-          [
-            -110.390625,
-            44.465151013519616
-          ],
-          [
-            -103.42529296875,
-            44.26093725039923
-          ],
-          [
-            -94.89990234375,
-            41.52502957323801
-          ]
-        ]
-      }
-    }
-  ]
-}
-]
-    var myStyle = {
-      "color": "#228B22",
-      "weight": 4,
-      "opacity": 0.5,
-    };
-
-    L.geoJSON(myGeoJSON, {
-      style: myStyle,
+$.each(JSON.parse(locations), function (idx, obj) {
+    var marker = L.marker([obj.latitude, obj.longitude], {
+        title: obj.title,
+        opacity: 1,
+        riseOnHover: true
     }).addTo(map);
+    marker.bindPopup(obj.description);
+});
+
+   
 
 });  
 </script>
