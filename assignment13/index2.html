@@ -39,7 +39,7 @@
     }
     .legend i {
         width: 18px;
-        height: 20px;
+        height: 19px;
         float: left;
         margin-right: 8px;
         opacity: 0.8;
@@ -51,10 +51,6 @@
         box-shadow: 0 0 15px rgba(0,0,0,0.2);
         border-radius: 5px;
 
-    }
-    .info h5 {
-        margin: 0 0 5px;
-        color: #e5e5e5;
     }
 </style>
 
@@ -137,7 +133,7 @@ legend.onAdd = function(map) {
     labels = ['Metro', 'Non-metro', 'Rural'];
 
   
-   div.innerHTML += "<b>County Population</b><br>";
+   div.innerHTML += "<strong>County Population</strong><br>";
   // loop through items and generate a label with a colored square for each
   for (var i = 0; i < pop_size.length; i++) {
     div.innerHTML +=
