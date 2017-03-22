@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Anderson Assignment 14</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous">
+  </script>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" /> <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+  <script src="https://indicator.extension.iastate.edu/classes/leaflet-ajax-gh-pages/dist/leaflet.ajax.min.js"></script>
+</head>
+
+<style>
+   H2 {color:#272727;
+	   margin-bottom: 0px;
+	   text-align: center;
+   }
+   H5 {color:#272727;
+	   margin-top: 5px;
+	   text-align: center;
+   }
+   H3 {
+    color: #4D4B4C;
+   }
+   
+   #map {
+     width: 600px;
+     height: 500px;
+  }
+   .link-center {
+   	text-align: center;
+   }
+   
+    .titleHead {
+    padding: 10px;
+   }
+   .link {
+    margin: 30px;
+    margin-top: 10px;
+   }
+   .legend {
+    line-height: 10px;
+    color: #555;
+    }
+    .legend i {
+        width: 18px;
+        height: 19px;
+        float: left;
+        margin-right: 8px;
+        opacity: 0.8;
+    }
+    .info {
+        padding: 6px 8px;
+        font: 10px/20px Arial, Helvetica, sans-serif;
+        background: rgba(255,255,255,0.8);
+        box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        border-radius: 5px;
+
+    }
+</style>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <nav class="navbar navbar-inverse">
+     <h3 class="pull-right text-muted titleHead">Assignment 14</h3>
+      </nav>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <h4>Significant Earthquakes in the last 30 days</h4>
+        <div id="map"> </div>
+       <!--  <h6>Number of Significant Earthquakes in the last 30 days: </strong><span id = "totalNumber"></h6> -->
+      </div><!--end col-sm-6-->
+      
+    </div><!--end row-->
+  </div>
+  
+
+
+</body>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script>
+
+var data;
+
+var map = L.map('map', {
+  'center': [43, -93],
+  'zoom': 2,
+  'worldCopyJump': true,
+});
+
+
+// add an OpenStreetMap tile layer
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+  maxZoom: 18
+}).addTo(map);
+
+map.doubleClickZoom.enable();
+
+myURL = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_month.geojson';
+
+//default rendering options
+var geojsonMarkerOptions = {
+  color: "#000",
+  weight: 0, //set this to one to add a black outline to each marker
+  opacity: 1,
+  fillOpacity: 0.5
+};
+
+//set color of circle
+function getColor(d) {
+  return d > 6 ? '#891C1A' : //red darkest for higher mag
+    d > 5 ? '#FFA500' :
+    d > 4 ? '#ffff00' : 
+    d > 3 ? '#006400' ://green lowest
+    '#FFFFFF'; 
+}
+
+var geojsonLayer = new L.GeoJSON.AJAX(myURL, {
+  pointToLayer: function(feature, latlng) {
+    return new L.CircleMarker(latlng, geojsonMarkerOptions);
+  },
+  style: function(feature) {
+    //console.log(feature.properties.mag);//note this is how you access contents of each quake within L.geoJson
+    return {
+      radius: feature.properties.mag * 2.5,
+      fillColor: getColor(feature.properties.mag)
+    };
+  },
+  onEachFeature: function(feature, layer) {
+    layer.bindPopup("<strong>Magnitude: </strong>" + feature.properties.mag + "<br> <strong>Location: </strong>" + feature.properties.place);
+  }
+}).addTo(map);
+
+
+
+
+//Create Legend
+var legend = L.control({
+  position: 'bottomright'
+});
+
+legend.onAdd = function(map) {
+
+  var div = L.DomUtil.create('div', 'info legend'),
+    mag_size = [4, 5, 6, 7],
+    labels = ['Smaller', '', '', 'Larger'];
+
+  
+   div.innerHTML += "<strong>Magnitude Size</strong><br>";
+  // loop through items and generate a label with a colored square for each
+  for (var i = 0; i < mag_size.length; i++) {
+    div.innerHTML +=
+      '<i style="background:' + getColor(mag_size[i] ) + ' "></i> ' +
+       labels[i]+'<br>';
+  }
+
+  return div;
+};
+legend.addTo(map);
+
+</script>
+</html>

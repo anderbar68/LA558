@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Anderson Assignment 13</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous">
+  </script>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" /> <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+  <script src="wyomingLocations.js"></script>
+</head>
+
+<style>
+   H2 {color:#272727;
+	   margin-bottom: 0px;
+	   text-align: center;
+   }
+   H5 {color:#272727;
+	   margin-top: 5px;
+	   text-align: center;
+   }
+   H3 {
+    color: #4D4B4C;
+   }
+   
+   #map {
+     width: 600px;
+     height: 500px;
+  }
+   .link-center {
+   	text-align: center;
+   }
+   
+    .titleHead {
+    padding: 10px;
+   }
+   .link {
+    margin: 30px;
+    margin-top: 10px;
+   }
+</style>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <nav class="navbar navbar-inverse">
+     <h3 class="pull-right text-muted titleHead">Assignment 13</h3>
+      </nav>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div id="map2">
+           
+        </div>
+        
+      </div><!--end col-sm-6-->
+      
+    </div><!--end row-->
+  </div>
+  
+
+
+</body>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script>
+
+ 
+//This example uses jquery to parse JSON contained in an external link. The data is the sme as shown in map1, but it is contained in a var called wyomingLocations
+
+var map2 = L.map('map2').setView([44.5, -108.5], 6);
+// add an OpenStreetMap tile layer
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: 'LA558 lecture 22',
+    maxZoom: 18
+}).addTo(map2);
+
+$.each(JSON.parse(wyomingLocations), function (idx, obj) {
+    var marker = L.marker([obj.latitude, obj.longitude], {
+        title: obj.title,
+        opacity: 0.9,
+        riseOnHover: true
+    }).addTo(map2);
+    marker.bindPopup(obj.description);
+});
+
+</script>
+</html>
