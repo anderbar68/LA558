@@ -2,12 +2,12 @@
 <html>
 <head>
 
-<title>Anderson Assignment 13</title>
+<title>Anderson Assignment 15</title>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-
+<link rel="stylesheet" href="https://anderbar68.github.io/LA558/classes/Leaflet.awesome-markers-master/dist/leaflet.awesome-markers.css">
 <script
   src="https://code.jquery.com/jquery-2.2.4.min.js"
   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
@@ -38,24 +38,8 @@
     .titleHead {
     padding: 10px;
     }
-   .legend {
-    line-height: 10px;
-    color: #555;
-    }
-    .legend i {
-        width: 18px;
-        height: 19px;
-        float: left;
-        margin-right: 8px;
-        opacity: 0.8;
-    }
-    .info {
-        padding: 6px 8px;
-        font: 10px/20px Arial, Helvetica, sans-serif;
-        background: rgba(255,255,255,0.8);
-        box-shadow: 0 0 15px rgba(0,0,0,0.2);
-        border-radius: 5px;
-
+    .button-style {
+        margin-top: 15px;
     }
 </style>
 
@@ -70,18 +54,18 @@
       <div class="col-md-6 col-md-offset-3">
         <div id="map">
         </div>
-        <div class="btn-group" data-toggle="buttons">
-          <label class="btn btn-primary active">
-            <input type="radio" name="options" id="js-all" autocomplete="off" checked> All
+        <div class="btn-group button-style" data-toggle="buttons">
+          <label class="btn btn-primary active" id="js-all">
+            <input type="radio" name="options" id="js-al" autocomplete="off"> All
           </label>
-          <label class="btn btn-primary">
-            <input type="radio" name="options" id="js-city" autocomplete="off"> Cities in Ham. Co.
+          <label class="btn btn-primary" id="js-city">
+            <input type="radio" name="options" id="js-cit" autocomplete="off"> Cities in Ham. Co.
           </label>
-            <label class="btn btn-primary">
-            <input type="radio" name="options" id="js-park" autocomplete="off"> State Parks
+            <label class="btn btn-primary" id="js-park">
+            <input type="radio" name="options" id="js-par" autocomplete="off"> State Parks
           </label>
-          <label class="btn btn-primary">
-            <input type="radio" name="options" id="js-capital" autocomplete="off"> State Capital
+          <label class="btn btn-primary" id="js-capital">
+            <input type="radio" name="options" id="js-capita" autocomplete="off"> State Capital
           </label>
         </div>
       </div><!--end col-sm-6-->
@@ -296,10 +280,9 @@ promise.then(function(data) {
 //allRecreation1.addTo(map);
 
   $("#js-all").click(function() {
-    //map.addLayer(allRecreation);
-    map.addLayer(city);
-    map.addLayer(park);
     map.addLayer(capital);
+   map.addLayer(city);
+    map.addLayer(park);
   });
   $("#js-city").click(function() {
     map.addLayer(city);
