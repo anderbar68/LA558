@@ -12,8 +12,12 @@
   crossorigin="anonymous">
   </script>
 
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" /> <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" /> 
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
   <script src="https://anderbar68.github.io/LA558/assignment13/iowaCounties.json"></script>
+<script src="https://anderbar68.github.io/LA558/classes/Leaflet.pattern-master/dist/leaflet.pattern-src.js"></script>
+    <script src="https://anderbar68.github.io/LA558/classes/leaflet.awesome-markers.js"></script>
 </head>
 
 <style>
@@ -64,9 +68,18 @@
     <div class="row">
       <div class="col-md-6 col-md-offset-3">
         <div id="map">
-           
         </div>
-        
+        <div class="btn-group" data-toggle="buttons">
+          <label class="btn btn-primary active">
+            <input type="radio" name="options" id="option1" autocomplete="off" checked> Cities in Ham. Co.
+          </label>
+          <label class="btn btn-primary">
+            <input type="radio" name="options" id="option2" autocomplete="off"> State Parks
+          </label>
+          <label class="btn btn-primary">
+            <input type="radio" name="options" id="option3" autocomplete="off"> State Capital
+          </label>
+        </div>
       </div><!--end col-sm-6-->
       
     </div><!--end row-->
@@ -112,7 +125,7 @@ function style(feature) {
 }
 
 
-L.geoJson(locations, {
+var myData1 =L.geoJson(locations, {
   style: style,
   onEachFeature: function (feature, layer) {
         htmlText = "<strong>" + feature.properties.NAME+ "</strong><br>Population 2010: "  + feature.properties.POP2010 + "";
@@ -120,53 +133,111 @@ L.geoJson(locations, {
     layer.bindTooltip(feature.properties.NAME);
     }
 }).addTo(map);
-
-//Create Legend
-var legend = L.control({
-  position: 'bottomright'
+    
+//four predefined hatch patterns with pattern0 having no hatch
+var bigStripe3 = new L.StripePattern({
+	weight: 1,
+	height: 2,
+	//spaceWeight: 1,
+	angle: 45,
+	opacity: 0.8,
+    color: '#891C1A',
+	spaceOpacity: 0.15,
 });
+bigStripe3.addTo(map);
 
-legend.onAdd = function(map) {
+var bigStripe2 = new L.StripePattern({
+	weight: 1,
+	height: 6,
+	//spaceWeight: 5,
+	angle: 45,
+	opacity: 0.8,
+	spaceOpacity: 0.15,
+});
+bigStripe2.addTo(map);
 
-  var div = L.DomUtil.create('div', 'info legend'),
-    pop_size = [1, 4, 8],
-    labels = ['Metro', 'Non-metro', 'Rural'];
+var bigStripe1 = new L.StripePattern({
+	weight: 1,
+	height: 8,
+	//spaceWeight: 5,
+	angle: 45,
+	opacity: 1,
+	spaceOpacity: 0.8,
+});
+bigStripe1.addTo(map);
 
-  
-   div.innerHTML += "<strong>County Population</strong><br>";
-  // loop through items and generate a label with a colored square for each
-  for (var i = 0; i < pop_size.length; i++) {
-    div.innerHTML +=
-      '<i style="background:' + getColor(pop_size[i] ) + ' "></i> ' +
-       labels[i]+'<br>';
-  }
+var bigStripe0 = new L.StripePattern({
+	opacity: 0.0,
+	spaceOpacity: 0.0,
+});
+bigStripe0.addTo(map);
 
-  return div;
-};
-legend.addTo(map);
+//Determine Hatch pattern based on value passed as d
+function getPattern(d) {
+    return d <= '1' ? bigStripe3 :
+    d <= '2' ? bigStripe3 :
+   d <= '3' ? bigStripe3 :
+    d <= '4' ? bigStripe2 :
+    d <= '5' ? bigStripe2 :
+  d <= '6' ? bigStripe2 :
+  d <= '7' ? bigStripe2 :
+  d <= '8' ? bigStripe1 :
+  d <= '9' ? bigStripe1 :
+   bigStripe0;
+    
+}
+
+//add a second map that is hatched based on the pop of the county.
+var myData2 = L.geoJson(locations, {
+    onEachFeature: function (feature, layer) {
+	    layer.setStyle({
+			weight: 1,
+			color: 'black',
+			fillPattern: getPattern(feature.properties.RUCC_2013),
+			fillOpacity: 0.75
+		});
+   }
+}).addTo(map);
+
+
+
 
 //layer control
+    
 var baseMaps = {
   "Open Street Map": osm,
 
 };
+
 var websterCity = L.marker([42.466389, -93.820556]).bindPopup('Webster City'),
         stanhope    = L.marker([42.289444, -93.795278]).bindPopup('Stanhope'),
         williams    = L.marker([42.4875, -93.543056]).bindPopup('williams');
 //toggle cities in ham. co 
 var cities = L.layerGroup([websterCity, stanhope, williams]);
 
-var desMoines = L.marker([41.590833, -93.620833]).bindPopup('Des Moines'),
-        johnston    = L.marker([41.671389, -93.705833]).bindPopup('Johnston'),
-        ankeny    = L.marker([41.726667, -93.604167]).bindPopup('Ankeny');
-//toggle cities in polk co 
-var cities2 = L.layerGroup([desMoines, johnston, ankeny]);
+var desMoines = L.marker([41.590833, -93.620833]).bindPopup('Des Moines');
+        
+//toggle capital
+    
+var capital = L.layerGroup([desMoines]);
+var dolliver = L.marker([42.386944, -94.083611]).bindPopup('Dolliver'),
+        ledges    = L.marker([41.990833, -93.883333]).bindPopup('Ledges'),
+        honeyCreek    = L.marker([40.86111, -92.93611]).bindPopup('Honey Creek');
+//toggle parks 
+var parks = L.layerGroup([dolliver, ledges, honeyCreek]);
+    
 var overlayMaps = {
   "Cities in Ham. Co.": cities,
-  "Cities in Polk Co.": cities2
+    "Parks in Iowa": parks,
+  "Capital": capital
 };
-
+    
 L.control.layers(baseMaps, overlayMaps).addTo(map);
+    
+
+
+
+
 
 });
 </script>
