@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Anderson Assignment 13</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous">
+  </script>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" /> <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+  <script src="https://anderbar68.github.io/LA558/assignment13/iowaCounties.json"></script>
+</head>
+
+<style>
+   
+   H3 {
+    color: #4D4B4C;
+   }
+   
+   #map {
+     width: 600px;
+     height: 500px;
+    }
+    .link-center {
+   	text-align: center;
+    }
+   
+    .titleHead {
+    padding: 10px;
+    }
+   .legend {
+    line-height: 10px;
+    color: #555;
+    }
+    .legend i {
+        width: 18px;
+        height: 19px;
+        float: left;
+        margin-right: 8px;
+        opacity: 0.8;
+    }
+    .info {
+        padding: 6px 8px;
+        font: 10px/20px Arial, Helvetica, sans-serif;
+        background: rgba(255,255,255,0.8);
+        box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        border-radius: 5px;
+
+    }
+</style>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <nav class="navbar navbar-inverse">
+     <h3 class="pull-right text-muted titleHead">Assignment 13</h3>
+      </nav>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div id="map">
+           
+        </div>
+        
+      </div><!--end col-sm-6-->
+      
+    </div><!--end row-->
+  </div>
+  
+
+
+</body>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script>
+$(document).ready(function(){
+var map = L.map('map').setView([41.837, -93.615], 7);
+
+// add an OpenStreetMap tile layer
+var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+  maxZoom: 18
+}).addTo(map);
+
+//set color of marker
+function getColor(d) {
+  return d <= '1' ? '#891C1A' :
+    d <= '2' ? "#891C1A" :
+   d <= '3' ? "#891C1A" :
+    d <= '4' ? "#C84F42" :
+    d <= '5' ? "#C84F42" :
+  d <= '6' ? "#C84F42" :
+  d <= '7' ? "#C84F42" :
+  d <= '8' ? "#D57B72" :
+  d <= '9' ? "#D57B72" :
+    "#FFFFFF"; //white for anything else
+}
+
+function style(feature) {
+    return {
+        fillColor: getColor(feature.properties.RUCC_2013),
+        weight: 1,
+        opacity: 1,
+        color: 'white',
+        dashArray: '1',
+        fillOpacity: 0.5
+    };
+}
+
+
+L.geoJson(locations, {
+  style: style,
+  onEachFeature: function (feature, layer) {
+        htmlText = "<strong>" + feature.properties.NAME+ "</strong><br>Population 2010: "  + feature.properties.POP2010 + "";
+        layer.bindPopup(htmlText);
+    layer.bindTooltip(feature.properties.NAME);
+    }
+}).addTo(map);
+
+//Create Legend
+var legend = L.control({
+  position: 'bottomright'
+});
+
+legend.onAdd = function(map) {
+
+  var div = L.DomUtil.create('div', 'info legend'),
+    pop_size = [1, 4, 8],
+    labels = ['Metro', 'Non-metro', 'Rural'];
+
+  
+   div.innerHTML += "<strong>County Population</strong><br>";
+  // loop through items and generate a label with a colored square for each
+  for (var i = 0; i < pop_size.length; i++) {
+    div.innerHTML +=
+      '<i style="background:' + getColor(pop_size[i] ) + ' "></i> ' +
+       labels[i]+'<br>';
+  }
+
+  return div;
+};
+legend.addTo(map);
+
+//layer control
+var baseMaps = {
+  "Open Street Map": osm,
+
+};
+var websterCity = L.marker([42.466389, -93.820556]).bindPopup('Webster City'),
+        stanhope    = L.marker([42.289444, -93.795278]).bindPopup('Stanhope'),
+        williams    = L.marker([42.4875, -93.543056]).bindPopup('williams');
+//toggle cities in ham. co 
+var cities = L.layerGroup([websterCity, stanhope, williams]);
+
+var desMoines = L.marker([41.590833, -93.620833]).bindPopup('Des Moines'),
+        johnston    = L.marker([41.671389, -93.705833]).bindPopup('Johnston'),
+        ankeny    = L.marker([41.726667, -93.604167]).bindPopup('Ankeny');
+//toggle cities in polk co 
+var cities2 = L.layerGroup([desMoines, johnston, ankeny]);
+var overlayMaps = {
+  "Cities in Ham. Co.": cities,
+  "Cities in Polk Co.": cities2
+};
+
+L.control.layers(baseMaps, overlayMaps).addTo(map);
+
+});
+</script>
+</html>
