@@ -119,7 +119,35 @@
 <script>
 $(document).ready(function(){
 var data;
-var map = L.map('map').setView([43, -93], 3);
+// Base Layers
+    var OSM = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 18
+    });
+    var Esri_WorldStreetMap =
+      L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012'
+    });
+    var Esri_NatGeoWorldMap =
+        L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}', {
+          attribution: 'Tiles &copy; Esri &mdash; National Geographic, Esri, DeLorme, NAVTEQ, UNEP-WCMC, USGS, NASA, ESA, METI, NRCAN, GEBCO, NOAA, iPC',
+          maxZoom: 16
+    });
+
+ // Create map
+    var map = L.map('map', {
+        center: new L.LatLng(43, -93),
+        zoom: 3,
+        layers: [Esri_WorldStreetMap]
+    });   
+// Layer control
+    var baseMaps = {
+      "OpenStreetMap": OSM,
+      "Esri_WorldStreetMap": Esri_WorldStreetMap,
+      "Esri_NatGeoWorldMap": Esri_NatGeoWorldMap,
+    };  
+    L.control.layers(baseMaps).addTo(map);
+    
 // add an OpenStreetMap tile layer
 L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
   attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
