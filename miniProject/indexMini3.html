@@ -11,6 +11,8 @@
 <link rel="stylesheet" href="https://anderbar68.github.io/LA558/classes/Leaflet.awesome-markers-master/dist/leaflet.awesome-markers.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/leaflet.css" />
      <link rel="stylesheet" href="https://leaflet.github.io/Leaflet.markercluster/dist/MarkerCluster.css" />
+
+    <link rel="stylesheet" href="https://leaflet.github.io/Leaflet.markercluster/dist/MarkerCluster.Default.css" />
     
 
 <script
@@ -21,9 +23,8 @@
 
   <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
     <script src="https://indicator.extension.iastate.edu/classes/leaflet-ajax-gh-pages/dist/leaflet.ajax.min.js"></script>
-    <script src="https://leaflet.github.io/Leaflet.markercluster/dist/leaflet.markercluster-src.js"></script>
   <script src="https://anderbar68.github.io/LA558/classes/Leaflet.awesome-markers-master/dist/leaflet.awesome-markers.js"></script>
-    
+    <script src="https://leaflet.github.io/Leaflet.markercluster/dist/leaflet.markercluster-src.js"></script>
 </head>
 
 <style>
@@ -137,7 +138,7 @@ var data;
     var map = L.map('map', {
         center: new L.LatLng(43, -93),
         zoom: 3,
-        layers: [OSM]
+        layers: [Esri_WorldStreetMap]
     });   
 // Layer control
     var baseMaps = {
@@ -146,12 +147,8 @@ var data;
       "Esri_NatGeoWorldMap": Esri_NatGeoWorldMap,
     };  
     L.control.layers(baseMaps).addTo(map);
-    
-// add an OpenStreetMap tile layer
-L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-  attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-  maxZoom: 18
-}).addTo(map);
+
+
 //load data
 myURL = 'https://anderbar68.github.io/LA558/miniProject/parks.json';
 var parkIcon = L.AwesomeMarkers.icon({
@@ -159,8 +156,8 @@ var parkIcon = L.AwesomeMarkers.icon({
   markerColor: 'green', // see colors above
   icon: 'fa-tree' //http://fortawesome.github.io/Font-Awesome/icons/
 });
-var clusters = L.markerClusterGroup();   
-var markerz = new L.GeoJSON.AJAX(myURL, {
+    
+var geojsonLayer = new L.GeoJSON.AJAX(myURL, {
   pointToLayer: function(feature, latlng) {
       return L.marker(latlng, {
         icon: parkIcon
@@ -169,11 +166,7 @@ var markerz = new L.GeoJSON.AJAX(myURL, {
       });
     }
   
-});
-   
-clusters.addLayer(markerz); 
-map.addLayer(clusters);
-
+}).addTo(map);
 
 $("#states").change(function (){ 
  
@@ -202,6 +195,13 @@ $("#states").change(function (){
         map.setView([35.683333, -83.533333], 9);
     });
     
+var markers = L.markerClusterGroup();
+markers.addLayer(L.marker(getRandomLatLng(map)));
+map.addLayer(markers);
+
+
+
+
 }); //end doc ready
 </script>
 </html>
