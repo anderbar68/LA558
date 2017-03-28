@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Anderson Assignment 16</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/leaflet.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/leaflet.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://leaflet.github.io/Leaflet.markercluster/dist/MarkerCluster.css" />
+
+    <link rel="stylesheet" href="https://leaflet.github.io/Leaflet.markercluster/dist/MarkerCluster.Default.css" />
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+<script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous">
+  </script>
+
+   <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+  <script src="https://leaflet.github.io/Leaflet.markercluster/dist/leaflet.markercluster-src.js"></script>
+
+    <script src="https://leaflet.github.io/Leaflet.markercluster/example/realworld.10000.js"></script>
+    <script	 src="https://leaflet.github.io/Leaflet.heat/dist/leaflet-heat.js"></script>
+</head>
+
+<style>
+   H2 {color:#272727;
+	   margin-bottom: 0px;
+	   text-align: center;
+   }
+   H5 {color:#272727;
+	   margin-top: 5px;
+	   text-align: center;
+   }
+   H3 {
+    color: #4D4B4C;
+   }
+   
+   #map {
+     width: 600px;
+     height: 500px;
+  }
+   .link-center {
+   	text-align: center;
+   }
+   
+    .titleHead {
+    padding: 10px;
+   }
+   .link {
+    margin: 30px;
+    margin-top: 10px;
+   }
+</style>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <nav class="navbar navbar-inverse">
+     <h3 class="pull-right text-muted titleHead">Assignment 16</h3>
+      </nav>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div id="map">
+           
+        </div>
+        
+      </div><!--end col-sm-6-->
+      
+    </div><!--end row-->
+  </div>
+  
+
+
+</body>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script>
+ 
+var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+		    maxZoom: 18,
+		    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors, Points &copy 2012 LINZ'
+		  }),
+		  latlng = L.latLng(-37.89, 175.46);
+		var map = L.map('map', {
+		  center: latlng,
+		  zoom: 13,
+		  layers: [osm]
+		});
+		var markers = L.markerClusterGroup();
+		var singleMarkers = L.layerGroup([]);
+		for (var i = 0; i < addressPoints.length; i++) {
+		  var a = addressPoints[i];
+		  var title = a[2];
+		  var marker = L.marker(new L.LatLng(a[0], a[1]), {
+		    title: title
+		  });
+		  marker.bindPopup(title);
+		  markers.addLayer(marker);
+		  singleMarkers.addLayer(marker);
+		}
+		map.addLayer(singleMarkers);
+        
+        
+        //Heat map
+        var myArray = [];
+        var max = 100;
+        var min = 1;
+        var map;
+        //Assign x, y, z values
+        for (var i = 0; i< addressPoints.length; i+=100) {
+          var x = addressPoints[i][0];
+          var y = addressPoints[i][1];
+          var z = addressPoints[i][2];
+          //nsole.log(x)
+          myArray.push([x, y, z]);
+        }
+        console.log(addressPoints.length);
+        console.log(myArray);
+                //layer control
+        var heatMap = L.heatLayer(myArray, {
+            minOpacity: 0.1, //the minimum opacity the heat will start at
+            maxZoom: 19, //zoom level where the points reach maximum intensity (as intensity scales with zoom), equals maxZoom of the map by default
+            max: 1.0, //maximum point intensity, 1.0 by default
+            radius: 25, //radius of each "point" of the heatmap, 25 by default
+            blur: 15, //amount of blur, 15 by default
+            gradient: {
+                    0.2: 'green', 
+                    0.65: 'lime', 
+                    1: 'red'
+            } //color gradient config, e.g. {0.4: 'blue', 0.65: 'lime', 1: 'red'}	
+        });
+		//layer control
+		var baseMaps = {
+		  "OSM": osm
+		};
+		var overlayMaps = {
+		  "Single markers": singleMarkers,
+		  "Cluster": markers,
+            "Heatmap": heatMap
+		};
+		L.control.layers(baseMaps, overlayMaps).addTo(map);
+   
+</script>
+</html>
