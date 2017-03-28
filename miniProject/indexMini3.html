@@ -67,7 +67,7 @@
      <div class="row">
          <div class="col-md-12">
              <h1>National Parks and Landmarks</h1>
-             <p>The data shown below includes established national parks and monuments. Hover over the data to see the name of each national landmark.</p>
+             <p>Hover over the data to see the name of each national landmark.</p>
          </div>
     <div class="row">
       <div class="col-md-7">
@@ -99,9 +99,12 @@
                    </div>
                  </div>
                   <div class="row">
-                    <div class="col-sm-12 text-center" >
-                      <button type="button" class="btn btn-primary" id="largest">View Largest Park</button>
-                      <button type="button" class="btn btn-primary" id="visit">View Highest Visited Park</button>
+                    <div class="col-sm-12 " >
+                        <label class="control-label">Overall Park Data</label>
+                        <div class="text-center">
+                      <button type="button" class="btn btn-success" id="largest">View Largest Park</button>
+                      <button type="button" class="btn btn-success" id="visit">View Most Visited Park</button>
+                        </div>
                     </div>
                   </div>
                  <p>
@@ -138,7 +141,7 @@ var data;
     var map = L.map('map', {
         center: new L.LatLng(43, -93),
         zoom: 3,
-        layers: [Esri_WorldStreetMap]
+        layers: [OSM]
     });   
 // Layer control
     var baseMaps = {
