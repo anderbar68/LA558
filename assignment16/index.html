@@ -24,6 +24,7 @@
   <script src="https://leaflet.github.io/Leaflet.markercluster/dist/leaflet.markercluster-src.js"></script>
 
     <script src="https://leaflet.github.io/Leaflet.markercluster/example/realworld.10000.js"></script>
+    <script	 src="https://leaflet.github.io/Leaflet.heat/dist/leaflet-heat.js"></script>
 </head>
 
 <style>
@@ -108,7 +109,38 @@ var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 		}
 
 		map.addLayer(singleMarkers);
+        
+        
+        //Heat map
+        var myArray = [];
+        var max = 100;
+        var min = 1;
+        var map;
 
+        //Assign x, y, z values
+        for (var i = 0; i< addressPoints.length; i+=100) {
+          var x = addressPoints[i][0];
+          var y = addressPoints[i][1];
+          var z = addressPoints[i][2];
+          //nsole.log(x)
+          myArray.push([x, y, z]);
+        }
+        console.log(addressPoints.length);
+        console.log(myArray);
+                //layer control
+
+        var heatMap = L.heatLayer(myArray, {
+            minOpacity: 0.1, //the minimum opacity the heat will start at
+            maxZoom: 19, //zoom level where the points reach maximum intensity (as intensity scales with zoom), equals maxZoom of the map by default
+            max: 1.0, //maximum point intensity, 1.0 by default
+            radius: 25, //radius of each "point" of the heatmap, 25 by default
+            blur: 15, //amount of blur, 15 by default
+            gradient: {
+                    0.2: 'green', 
+                    0.65: 'lime', 
+                    1: 'red'
+            } //color gradient config, e.g. {0.4: 'blue', 0.65: 'lime', 1: 'red'}	
+        }).addTo(map);
 
 		//layer control
 
@@ -118,8 +150,8 @@ var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 
 		var overlayMaps = {
 		  "Single markers": singleMarkers,
-		  "Cluster": markers
-
+		  "Cluster": markers,
+            "Heatmap": heatMap
 		};
 
 
