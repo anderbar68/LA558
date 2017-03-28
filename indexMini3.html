@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Anderson Assignment 14</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://anderbar68.github.io/LA558/classes/Leaflet.awesome-markers-master/dist/leaflet.awesome-markers.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/leaflet.css" />
+     <link rel="stylesheet" href="https://leaflet.github.io/Leaflet.markercluster/dist/MarkerCluster.css" />
+
+    <link rel="stylesheet" href="https://leaflet.github.io/Leaflet.markercluster/dist/MarkerCluster.Default.css" />
+    
+
+<script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous">
+  </script>
+
+  <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+    <script src="https://indicator.extension.iastate.edu/classes/leaflet-ajax-gh-pages/dist/leaflet.ajax.min.js"></script>
+  <script src="https://anderbar68.github.io/LA558/classes/Leaflet.awesome-markers-master/dist/leaflet.awesome-markers.js"></script>
+    <script src="https://leaflet.github.io/Leaflet.markercluster/dist/leaflet.markercluster-src.js"></script>
+</head>
+
+<style>
+   H2 {color:#272727;
+     margin-bottom: 0px;
+     text-align: center;
+   }
+   H5 {color:#272727;
+     margin-top: 5px;
+     text-align: center;
+   }
+   H3 {
+    color: #4D4B4C;
+   }
+   
+   #map {
+     width: 700px;
+     height: 600px;
+  }
+   .link-center {
+    text-align: center;
+   }
+   
+    .titleHead {
+    padding: 10px;
+   }
+   .link {
+    margin: 30px;
+    margin-top: 10px;
+   }
+</style>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <nav class="navbar navbar-inverse">
+     <h3 class="pull-right text-muted titleHead">Mini Project</h3>
+      </nav>
+    </div>
+     <div class="row">
+         <div class="col-md-12">
+             <h1>National Parks and Landmarks</h1>
+             <p>The data shown below includes established national parks and monuments. Hover over the data to see the name of each national landmark.</p>
+         </div>
+    <div class="row">
+      <div class="col-md-7">
+        <div id="map"></div>
+        
+      </div><!--end col-sm-6-->
+        <div class="col-md-5 pull-right">
+            <div class="panel panel-success" style="margin-left:20px;">
+              <div class="panel-heading">About This Data</div>
+              <div class="panel-body">
+                <p>The United States has 59 protected areas known as national parks that are operated by the National Park Service. National parks must be established by an act of the United States Congress. There are also other units of the National Park Service that are often mentioned and referred to as national parks.</p>
+                <p> A National Monument in the United States is a protected area that is similar to a National Park, but can be created from any land owned or controlled by the federal government.</p>
+              </div>
+            </div>
+            <div class="panel panel-success" style="margin-left:20px;">
+              <div class="panel-heading">Fun Facts</div>
+              <div class="panel-body">
+                 <p>California has the most established national parks (9), followed by Alaska (8), Utah (5), and Colorado (4). The largest national park is Wrangell–St. Elias in Alaska with over 8 million acres which is larger than each of the nine smallest states in America. The highest visited established national park is the Great Smoky Mountains in North Carolina and Tennessee, with over 11.3 million visitors in 2016.</p>
+                 <div class="row">
+                   <div class="col-sm-12 " style="margin-bottom: 20px;">
+                     <label class="control-label">View States with the Most National Parks</label>
+                       <select class="form-control" id="states">
+                        <option id="nothing">Select</option>
+                          <option id="cali">California</option>
+                          <option id="alaska">Alaska</option>
+                          <option id="utah">Utah</option>
+                          <option id="color">Colorado</option>
+                        </select>
+                   </div>
+                 </div>
+                  <div class="row">
+                    <div class="col-sm-12 text-center" >
+                      <button type="button" class="btn btn-primary" id="largest">View Largest Park</button>
+                      <button type="button" class="btn btn-primary" id="visit">View Highest Visited Park</button>
+                    </div>
+                  </div>
+                 <p>
+              </div>
+            </div>
+        </div>
+      
+    </div><!--end row-->
+  </div>
+  
+
+
+</body>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script>
+$(document).ready(function(){
+var data;
+// Base Layers
+    var OSM = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 18
+    });
+    var Esri_WorldStreetMap =
+      L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012'
+    });
+    var Esri_NatGeoWorldMap =
+        L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}', {
+          attribution: 'Tiles &copy; Esri &mdash; National Geographic, Esri, DeLorme, NAVTEQ, UNEP-WCMC, USGS, NASA, ESA, METI, NRCAN, GEBCO, NOAA, iPC',
+          maxZoom: 16
+    });
+
+ // Create map
+    var map = L.map('map', {
+        center: new L.LatLng(43, -93),
+        zoom: 3,
+        layers: [Esri_WorldStreetMap]
+    });   
+// Layer control
+    var baseMaps = {
+      "OpenStreetMap": OSM,
+      "Esri_WorldStreetMap": Esri_WorldStreetMap,
+      "Esri_NatGeoWorldMap": Esri_NatGeoWorldMap,
+    };  
+    L.control.layers(baseMaps).addTo(map);
+    
+// add an OpenStreetMap tile layer
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+  maxZoom: 18
+}).addTo(map);
+//load data
+myURL = 'https://anderbar68.github.io/LA558/miniProject/parks.json';
+var parkIcon = L.AwesomeMarkers.icon({
+  prefix: 'fa', //font awesome rather than bootstrap
+  markerColor: 'green', // see colors above
+  icon: 'fa-tree' //http://fortawesome.github.io/Font-Awesome/icons/
+});
+    
+var geojsonLayer = new L.GeoJSON.AJAX(myURL, {
+  pointToLayer: function(feature, latlng) {
+      return L.marker(latlng, {
+        icon: parkIcon
+      }).on('mouseover', function() {
+        this.bindPopup(feature.properties.Name).openPopup();
+      });
+    }
+  
+}).addTo(map);
+
+$("#states").change(function (){ 
+ 
+  var value = $(this).val();
+  if(value == 'California'){
+    map.setView([37, -120], 6) 
+    
+  } 
+  if(value == 'Alaska'){
+    map.setView([64, -150], 4)
+    
+  } 
+   if(value == 'Utah'){
+    map.setView([39, -111], 6)
+  } 
+   if(value == 'Colorado'){
+    map.setView([39, -105.5], 6)
+  } 
+  });
+
+    $('#largest').click(function () {
+        map.setView([61, -142], 7);
+    });
+
+    $('#visit').click(function () {
+        map.setView([35.683333, -83.533333], 9);
+    });
+    
+var markers = L.markerClusterGroup();
+markers.addLayer(L.marker(getRandomLatLng(map)));
+map.addLayer(markers);
+
+
+
+
+}); //end doc ready
+</script>
+</html>
