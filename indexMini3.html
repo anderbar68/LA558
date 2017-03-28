@@ -147,12 +147,7 @@ var data;
       "Esri_NatGeoWorldMap": Esri_NatGeoWorldMap,
     };  
     L.control.layers(baseMaps).addTo(map);
-    
-// add an OpenStreetMap tile layer
-L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-  attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-  maxZoom: 18
-}).addTo(map);
+
 //load data
 myURL = 'https://anderbar68.github.io/LA558/miniProject/parks.json';
 var parkIcon = L.AwesomeMarkers.icon({
