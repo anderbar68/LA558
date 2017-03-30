@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Anderson Assignment 17</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous">
+  </script>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" /> <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+  <script src="https://indicator.extension.iastate.edu/classes/leaflet-ajax-gh-pages/dist/leaflet.ajax.min.js"></script>
+</head>
+
+<style>
+   H2 {color:#272727;
+	   margin-bottom: 0px;
+	   text-align: center;
+   }
+   H5 {color:#272727;
+	   margin-top: 5px;
+	   text-align: center;
+   }
+   H3 {
+    color: #4D4B4C;
+   }
+   
+   #map {
+     width: 750px;
+     height: 600px;
+  }
+   .link-center {
+   	text-align: center;
+   }
+   
+    .titleHead {
+    padding: 10px;
+   }
+   
+</style>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <nav class="navbar navbar-inverse">
+     <h3 class="pull-right text-muted titleHead">Assignment 17</h3>
+      </nav>
+    </div>
+    <div class="row">
+      <div class="col-md-8">
+        <div id="map"></div>
+        
+      </div><!--end col-sm-6-->
+        <div class="col-md-4 pull-left">
+            <div class="panel panel-info" style="">
+              <div class="panel-heading">Map Control</div>
+              <div class="panel-body ">
+                 <div class="row">
+                   <div class="col-sm-12 " style="">
+                       <div class="form-inline">
+                      <label for="address">Enter address</label><br>
+                        <input type="text" class="form-control" id="address" placeholder="Enter Address"> <button type="button" class="btn btn-primary" id="go">Go!</button>
+                           </div>
+                   </div>
+                 </div>
+                  <div class="row">
+                    <div class="col-sm-12 text-center" >
+                      
+                    </div>
+                  </div>
+                 <p>
+              </div>
+            </div>
+        </div>
+      
+    </div><!--end row-->
+  </div>
+  
+
+
+</body>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    
+<script>
+
+var map = L.map('map', {
+  'center': [43, -93],
+  'zoom': 8,
+});
+
+
+// add an OpenStreetMap tile layer
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+  maxZoom: 18
+}).addTo(map);
+
+//uncomment for testing
+//$('#myAddress').val('1307 Florida Ave., Ames, IA, 50014');
+
+
+$('#go').click(function () {
+    myAddress = encodeURI($('#address').val());
+    //now take this address and send it to your geocoder of choice
+
+    var geocodingAPI_URL = "http://maps.googleapis.com/maps/api/geocode/json?address=" + myAddress + "&sensor=true";
+
+   //test in console log
+    console.log(geocodingAPI_URL);
+
+    //Start Geocoding
+    $.getJSON(geocodingAPI_URL, function (json) {
+        var address = json.results[0].formatted_address;
+        var lat = json.results[0].geometry.location.lat;
+        var long = json.results[0].geometry.location.lng;
+        console.log(address);
+        console.log(lat);
+        console.log(long);
+        var county = '';
+        $.each(json.results[0].address_components, function (i, jsonData) {
+            level = jsonData.types[0];
+            if ('administrative_area_level_2' === level.toLowerCase()) {
+                county = (jsonData.short_name);
+            }
+        });
+        
+
+        //now add the marker to the map
+        var marker = L.marker([lat, long], {
+            draggable: false,
+            title: address,
+            opacity: 1.0
+        }).addTo(map);
+
+        marker.bindPopup(county + "<br>" + lat + ", " + long).openPopup();
+		
+		map.setView([lat, long]);
+
+
+    });
+}); //end geocode click function
+</script>
+</html>
