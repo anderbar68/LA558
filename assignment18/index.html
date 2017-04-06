@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Anderson Assignment 16</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/leaflet.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/leaflet.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+<script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous">
+  </script>
+
+   <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+</head>
+
+<style>
+   H2 {color:#272727;
+	   margin-bottom: 0px;
+	   text-align: center;
+   }
+   H5 {color:#272727;
+	   margin-top: 5px;
+	   text-align: center;
+   }
+   H3 {
+    color: #4D4B4C;
+   }
+   
+   #map {
+     width: 600px;
+     height: 500px;
+  }
+   .link-center {
+   	text-align: center;
+   }
+   
+    .titleHead {
+    padding: 10px;
+   }
+   .link {
+    margin: 30px;
+    margin-top: 10px;
+   }
+</style>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <nav class="navbar navbar-inverse">
+     <h3 class="pull-right text-muted titleHead">Assignment 18</h3>
+      </nav>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div id="map">
+           
+        </div>
+        
+      </div><!--end col-sm-6-->
+      
+    </div><!--end row-->
+  </div>
+  
+
+
+</body>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script>
+
+ var map = L.map('map').setView([43, -93], 2);
+
+// add an OpenStreetMap tile layer
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+  maxZoom: 18
+}).addTo(map);
+
+//load data
+myURL = 'iowashape.geojson';
+
+
+var geojsonLayer = new L.GeoJSON.AJAX(myURL, {
+  
+  
+}).addTo(map);
+
+   
+
+
+</script>
+</html>
