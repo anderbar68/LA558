@@ -81,8 +81,8 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script>
 
-    var osm = L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
+    var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 });
 
 var poi = L.tileLayer('https://api.mapbox.com/styles/v1/anderbar/cj1cvombi00002royabljlu9t/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYW5kZXJiYXIiLCJhIjoiY2oxY3U4MWRsMDA2ZjJ6cGRkc2Rnbnk0dCJ9.HMKO48WdOuov0_6EdnQfKA', {
@@ -91,7 +91,7 @@ var poi = L.tileLayer('https://api.mapbox.com/styles/v1/anderbar/cj1cvombi00002r
 
 var map = L.map('map', {
     center: [36.241944, -116.825833],
-    zoom: 7,
+    zoom: 8,
     layers: [poi]
 });
 
