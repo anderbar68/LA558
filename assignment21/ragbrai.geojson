@@ -1,0 +1,134 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -96.05758666992188,
+          43.002638523957906
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -95.14984130859374,
+          43.15410339847366
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -94.2352294921875,
+          43.07390374227269
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -93.37898254394531,
+          43.14458518880386
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -92.67242431640625,
+          43.07340216393554
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -92.11074829101562,
+          43.384091842455746
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -91.47766113281249,
+          43.279204926082784
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -91.21810913085938,
+          43.36512572875844
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -96.05621337890625,
+            42.99862111927107
+          ],
+          [
+            -95.14572143554688,
+            43.158110622265646
+          ],
+          [
+            -94.2242431640625,
+            43.066881271984954
+          ],
+          [
+            -93.3782958984375,
+            43.1450861841603
+          ],
+          [
+            -92.669677734375,
+            43.072900581493215
+          ],
+          [
+            -92.10662841796875,
+            43.39107786275974
+          ],
+          [
+            -91.47216796875,
+            43.281204464332745
+          ],
+          [
+            -91.21536254882812,
+            43.36412734793572
+          ]
+        ]
+      }
+    }
+  ]
+}
