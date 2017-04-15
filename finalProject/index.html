@@ -57,13 +57,12 @@
   <div class="container">
     <div class="row">
       <nav class="navbar navbar-inverse">
-     <h3 class="pull-right text-muted titleHead">Mini Project</h3>
+     <h3 class="pull-right text-muted titleHead">Final Project</h3>
       </nav>
     </div>
      <div class="row">
          <div class="col-md-12">
-             <h1>National Parks and Landmarks</h1>
-             <p>Hover over the data to see the name of each national landmark.</p>
+             <h1>Libraries in Chicago</h1>
          </div>
     <div class="row">
       <div class="col-md-7">
@@ -83,13 +82,15 @@
                  <
                  <div class="row">
                    <div class="col-sm-12 " style="margin-bottom: 20px;">
-                     <label class="control-label">View States with the Most National Parks</label>
-                       <select class="form-control" id="states">
+                     <label class="control-label">Select Neighborhood </label>
+                       <select class="form-control" id="viewNeighborhood">
                         <option id="nothing">Select</option>
-                          <option id="cali">California</option>
-                          <option id="alaska">Alaska</option>
-                          <option id="utah">Utah</option>
-                          <option id="color">Colorado</option>
+                          <option value="41.83, -87.62">Douglas Community</option>
+                          <option value="41.82, -87.6">Oakland Community</option>
+                           <option value="41.81, -87.626667">Fuller Park Community</option>
+                           <option value="41.81, -87.62">Grand Boulevard Community</option>
+                           <option value="41.81, -87.6">Kenwood Community</option>
+                          
                         </select>
                    </div>
                  </div>
@@ -139,14 +140,14 @@ var data;
  // Create map
     var map = L.map('map', {
         center: new L.LatLng(41.836944, -87.684722),
-        zoom: 10,
+        zoom: 12,
         layers: [OSM]
     });   
 
 
 //load data 
 
-myURL = 'https://anderbar68.github.io/LA558/finalProject/library.json';
+myURL = 'https://anderbar68.github.io/LA558/finalProject/library.geojson';
 var libIcon = L.AwesomeMarkers.icon({
   prefix: 'fa', //font awesome rather than bootstrap
   markerColor: 'green', // see colors above
@@ -154,20 +155,36 @@ var libIcon = L.AwesomeMarkers.icon({
 });
    
 var geojsonLayer = new L.GeoJSON.AJAX(myURL, {
-  pointToLayer: function(meta, latlng) {
+  pointToLayer: function(feature, latlng) {
       return L.marker(latlng, {
         icon: libIcon
-      }).on('mouseover', function() {
-        //this.bindPopup(feature.properties.name).openPopup();
+      }).on('click', function() {
+        this.bindPopup(feature.properties.name).openPopup();
       });
     }
   
 }).addTo(map);
+    
+
 
 myURL2 = 'https://anderbar68.github.io/LA558/finalProject/boundary.geojson';
-
+function style(feature) {
+    return {
+        fillColor: '#808080',
+        weight: 2,
+        opacity: 1,
+        color: '#0000FF',
+        dashArray: '1',
+        fillOpacity: 0.5
+    };
+}
 var geojsonLayer2 = new L.GeoJSON.AJAX(myURL2, {
- 
+    style: style,
+  onEachFeature: function (feature, layer) {
+      
+    layer.bindPopup(feature.properties.community);
+    layer.bindTooltip(feature.properties.community);
+    }
   
 }).addTo(map);
 
@@ -183,6 +200,15 @@ var geojsonLayer2 = new L.GeoJSON.AJAX(myURL2, {
    
     L.control.layers(baseMaps).addTo(map);
 
+//change neighborhood view
+$("#viewNeighborhood").change(function() {
+    
+    viewNew = $("#viewNeighborhood option:selected").val();
+    console.log(viewNew);
+    viewCommunity = viewNew.split(",");
+    map.setView([viewCommunity[0], viewCommunity[1]], 15);
+  
+});
 
 /*$("#states").change(function (){ 
  
