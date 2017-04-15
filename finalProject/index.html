@@ -2,7 +2,7 @@
 <html>
 <head>
 
-<title>Anderson Mini Project</title>
+<title>Anderson Final Project</title>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
@@ -10,9 +10,6 @@
      <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://anderbar68.github.io/LA558/classes/Leaflet.awesome-markers-master/dist/leaflet.awesome-markers.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/leaflet.css" />
-     <link rel="stylesheet" href="https://leaflet.github.io/Leaflet.markercluster/dist/MarkerCluster.css" />
-
-    <link rel="stylesheet" href="https://leaflet.github.io/Leaflet.markercluster/dist/MarkerCluster.Default.css" />
     
 
 <script
@@ -24,7 +21,6 @@
   <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
     <script src="https://indicator.extension.iastate.edu/classes/leaflet-ajax-gh-pages/dist/leaflet.ajax.min.js"></script>
   <script src="https://anderbar68.github.io/LA558/classes/Leaflet.awesome-markers-master/dist/leaflet.awesome-markers.js"></script>
-    <script src="https://leaflet.github.io/Leaflet.markercluster/dist/leaflet.markercluster-src.js"></script>
 </head>
 
 <style>
@@ -78,14 +74,13 @@
             <div class="panel panel-success" style="margin-left:20px;">
               <div class="panel-heading">About This Data</div>
               <div class="panel-body">
-                <p>The United States has 59 protected areas known as national parks that are operated by the National Park Service. National parks must be established by an act of the United States Congress. There are also other units of the National Park Service that are often mentioned and referred to as national parks.</p>
-                <p> A National Monument in the United States is a protected area that is similar to a National Park, but can be created from any land owned or controlled by the federal government.</p>
+                
               </div>
             </div>
             <div class="panel panel-success" style="margin-left:20px;">
               <div class="panel-heading">Fun Facts</div>
               <div class="panel-body">
-                 <p>California has the most established national parks (9), followed by Alaska (8), Utah (5), and Colorado (4). The largest national park is Wrangell–St. Elias in Alaska with over 8 million acres which is larger than each of the nine smallest states in America. The highest visited established national park is the Great Smoky Mountains in North Carolina and Tennessee, with over 11.3 million visitors in 2016.</p>
+                 <
                  <div class="row">
                    <div class="col-sm-12 " style="margin-bottom: 20px;">
                      <label class="control-label">View States with the Most National Parks</label>
@@ -143,29 +138,36 @@ var data;
 
  // Create map
     var map = L.map('map', {
-        center: new L.LatLng(43, -93),
-        zoom: 3,
+        center: new L.LatLng(41.836944, -87.684722),
+        zoom: 10,
         layers: [OSM]
     });   
 
 
 //load data 
 
-myURL = 'https://anderbar68.github.io/LA558/miniProject/parks.json';
-var parkIcon = L.AwesomeMarkers.icon({
+myURL = 'https://anderbar68.github.io/LA558/finalProject/library.json';
+var libIcon = L.AwesomeMarkers.icon({
   prefix: 'fa', //font awesome rather than bootstrap
   markerColor: 'green', // see colors above
-  icon: 'fa-tree' //http://fortawesome.github.io/Font-Awesome/icons/
+  icon: 'fa-university' //http://fortawesome.github.io/Font-Awesome/icons/
 });
    
 var geojsonLayer = new L.GeoJSON.AJAX(myURL, {
-  pointToLayer: function(feature, latlng) {
+  pointToLayer: function(meta, latlng) {
       return L.marker(latlng, {
-        icon: parkIcon
+        icon: libIcon
       }).on('mouseover', function() {
-        this.bindPopup(feature.properties.Name).openPopup();
+        //this.bindPopup(feature.properties.name).openPopup();
       });
     }
+  
+}).addTo(map);
+
+myURL2 = 'https://anderbar68.github.io/LA558/finalProject/boundary.geojson';
+
+var geojsonLayer2 = new L.GeoJSON.AJAX(myURL2, {
+ 
   
 }).addTo(map);
 
@@ -182,7 +184,7 @@ var geojsonLayer = new L.GeoJSON.AJAX(myURL, {
     L.control.layers(baseMaps).addTo(map);
 
 
-$("#states").change(function (){ 
+/*$("#states").change(function (){ 
  
   var value = $(this).val();
   if(value == 'California'){
@@ -207,7 +209,7 @@ $("#states").change(function (){
 
     $('#visit').click(function () {
         map.setView([35.683333, -83.533333], 9);
-    });
+    });*/
     
 
 }); //end doc ready
