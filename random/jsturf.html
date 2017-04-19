@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Anderson Assignment 22</title>
+    <!--External Data-->	
+<script src="https://indicator.extension.iastate.edu/z_cjs/teachingGIS/webGIS_17/studentFeaturesDB.php?userID=anderbar&theFunction=responseVar"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://anderbar68.github.io/LA558/classes/Leaflet.awesome-markers-master/dist/leaflet.awesome-markers.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/leaflet.css" />
+     <link rel="stylesheet" href="https://leaflet.github.io/Leaflet.markercluster/dist/MarkerCluster.css" />
+
+    <link rel="stylesheet" href="https://leaflet.github.io/Leaflet.markercluster/dist/MarkerCluster.Default.css" />
+
+<script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous">
+  </script>
+
+
+  <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+    <script src="https://indicator.extension.iastate.edu/classes/leaflet-ajax-gh-pages/dist/leaflet.ajax.min.js"></script>
+  <script src="https://anderbar68.github.io/LA558/classes/Leaflet.awesome-markers-master/dist/leaflet.awesome-markers.js"></script>
+    <script src="https://leaflet.github.io/Leaflet.markercluster/dist/leaflet.markercluster-src.js"></script>
+</head>
+
+<style>
+   H2 {color:#272727;
+	   margin-bottom: 0px;
+	   text-align: center;
+   }
+   H5 {color:#272727;
+	   margin-top: 5px;
+	   text-align: center;
+   }
+   H3 {
+    color: #4D4B4C;
+   }
+   
+   #map {
+     width: 600px;
+     height: 500px;
+  }
+   .link-center {
+   	text-align: center;
+   }
+   
+    .titleHead {
+    padding: 10px;
+   }
+   .link {
+    margin: 30px;
+    margin-top: 10px;
+   }
+</style>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <nav class="navbar navbar-inverse">
+     <h3 class="pull-right text-muted titleHead">Assignment 22</h3>
+      </nav>
+    </div>
+    <div class="row">
+      <div class="col-md-12 ">
+          <h3>Assignment 22: Turf and Proj JS Playground</h3>
+          <hr>
+          <p>After looking at <a href"http://turfjs.org/">Turf website</a>, I've identified 5 tools/functions that could be useful in a future project:
+              <ul>
+                  <li><strong>lineDistance:</strong> lineDistance takes a LineString &amp; measures its length in the specified units. This would be cool to use in a project where you allow the user to draw their own lines, where they could potentially draw a line and want to know the total distance of line, for something like a road trip.</li>
+                  <li><strong>distance:</strong> distance calcs the distance between points in degrees, radians, miles, or kilometers. This would also be helpful in a mapping project because it allows for more user interaction and would allow the user to find out the distance between two points, especially in a transit map, for example. </li>
+                  <li><strong>truncate:</strong> truncate takes a GeoJSON Feature or FeatureCollection and truncates the precision of the decimals to a number you can choose. This would be helpful in maps where you allow the users to click on the map and display their coordinates without displaying a very long decimal that is overwhelming to a user.</li>
+                  <li><strong>random:</strong> random generates random GeoJSON data of both points and polygons. This would be especially helpful in testing while you create and generate projects as it allows markers and polygons to be added quickly.</li> 
+                  <li><strong>bbox:</strong> bbox takes a set of features and calculates the box around all input features, then returns a bounding box. This would be good to include in a project if you wanted to focus in on a specific area and call attention to all markers in one area. The user's eye would be instantly drawn to the box and could see the points more quickly.
+</li>
+                </ul>
+          </p>
+    
+        
+      </div><!--end col-sm-6-->
+       
+    </div><!--end row-->
+  </div>
+</body>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script>
+var map = L.map('map').setView([43, -93], 5);
+    
+
+// add an OpenStreetMap tile layer
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+  maxZoom: 18
+}).addTo(map);
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+        $("#myLocation").html("Geolocation is not supported by this browser.");
+    }
+}
+function showPosition(position) {
+	 $("#myLocation").html("Latitude: " + position.coords.latitude + 
+    "<br>Longitude: " + position.coords.longitude);
+    L.marker([position.coords.latitude, position.coords.longitude]).addTo(map);
+}
+
+
+var marker = L.marker([position.coords.latitude, position.coords.longitude]).addTo(map);
+
+</script>
+</html>
