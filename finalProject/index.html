@@ -51,6 +51,17 @@
     margin: 30px;
     margin-top: 10px;
    }
+    .legend {
+    line-height: 10px;
+    color: #555;
+}
+.legend i {
+    width: 18px;
+    height: 20px;
+    float: left;
+    margin-right: 8px;
+    opacity: 0.9;
+}
 </style>
 
 <body>
@@ -84,27 +95,84 @@
                    <div class="col-sm-12 " style="margin-bottom: 20px;">
                      <label class="control-label">Select Neighborhood </label>
                        <select class="form-control" id="viewNeighborhood">
-                        <option id="nothing">Select</option>
+                       <option id="nothing">Select</option>
                            <option value="41.97, -87.72">Albany Park Community</option>
+                           <option value="">Archer Heights Community</option>
+                           <option value="">Armour Square Community</option>
+                           <option value="">Ashburn Community</option>
+                           <option value="">Ashburn Gresham Community</option>
+                           <option value="">Austin Community</option>
+                           <option value="">Avalon Park Community</option>
+                           <option value="">Avondale Community</option>
+                           <option value="">Belmont Cragin Community</option>
+                           <option value="">Beverly Community</option>
+                           <option value="">Bridgeport Community</option>
+                           <option value="">Brighton Park Community</option>
+                           <option value="">Burnside Community</option>
+                           <option value="">Chatham Community</option>
+                           <option value="">Calumet Heights Community</option>
+                           <option value="">Chicago Lawn Community</option>
+                           <option value="">Clearing Community</option>
                           <option value="41.83, -87.62">Douglas Community</option>
                            <option value="41.95, -87.81">Dunning Community</option>
+                           <option value="">East Garfield Park Community</option>
+                           <option value="">East Side Community</option>
+                           <option value="">Edge Water Community</option>
+                           <option value="">Edison Park Community</option>
+                           <option value="">Englewood Community</option>
                            <option value="41.983333, -87.75">Forest Glen Community</option>
                            <option value="41.81, -87.626667">Fuller Park Community</option>
+                           <option value="">Gage Park Community</option>
+                           <option value="41.81, -87.62">Garfield Ridge Community</option>
                            <option value="41.81, -87.62">Grand Boulevard Community</option>
+                           <option value="">Greater Grand Crossing Community</option>
+                           <option value="">Hegewisch Community</option>
+                           <option value="">Hermosa Community</option>
+                           <option value="">Humboldt Park Community</option>
                            <option value="41.8, -87.59">Hyde Park Community</option>
                            <option value="41.95, -87.73">Irving Park Community</option>
                            <option value="41.98, -87.77">Jefferson Park Community</option>
                            <option value="41.81, -87.6">Kenwood Community</option>
+                           <option value="">Lake View Community</option>
+                           <option value="">Lincoln Park Community</option>
                            <option value="41.97, -87.69">Lincoln Square Community</option>
+                           <option value="">Logan Square Community</option>
+                           <option value="">Loop Community</option>
+                           <option value="">Lower West Side Community</option>
+                           <option value="">McKinley Park Community</option>
                            <option value="41.93, -87.8">Montclare Community</option>
+                           <option value="">Morgan Park Community</option>
+                           <option value="">Mount Greenwood Community</option>
+                           <option value="">Near North Side Community</option>
+                           <option value="">Near South Side Community</option>
+                           <option value="">Near West Side Community</option>
+                           <option value="">New City Community</option>
+                           <option value="">North Center Community</option>
+                           <option value="">North Lawndale Community</option>
                            <option value="41.95, -87.68">North Park Community</option>
+                           <option value="">Norwood Park Community</option>
                            <option value="41.82, -87.6">Oakland Community</option>
+                           <option value="">Ohare Community</option>
                            <option value="41.95, -87.76">Portage Park Community</option>
+                           <option value="">Pullman Community</option>
+                           <option value="42.01, -87.67">Riverdale Community</option>
                            <option value="42.01, -87.67">Rogers Park Community</option>
+                           <option value="">Roseland Community</option>
+                           <option value="">South Chicago Community</option>
+                           <option value="">South Deering Community</option>
+                           <option value="">South Lawndale Community</option>
+                           <option value="">South Shore Community</option>
+                           <option value="">Uptown Community</option>
+                           <option value="">Washington Heights Community</option>
                           <option value="41.79, -87.62">Washington Park Community</option>
+                          <option value="">West Garfield Park Community</option>
+                          <option value="">West Elsdon Community</option>
+                          <option value="">West Englewood Community</option>
+                          <option value="">West Lawn Community</option>
+                          <option value="">West Pullman Community</option>
+                          <option value="">West Ridge Community</option>
+                          <option value="">West Town Community</option>
                            
-                           
-                           <option value="41.93, -87.8">Montclare Community</option>
                         </select>
                    </div>
                  </div>
@@ -182,7 +250,47 @@ var geojsonLayer = new L.GeoJSON.AJAX(myURL, {
 
 
 myURL2 = 'https://anderbar68.github.io/LA558/finalProject/boundary.geojson';
+//set color of marker
+function getColor(d) {
+  return (d == '8') || (d =='32') || (d == '33') ? '#143446' : //central 
+  
+        (d == '5') || (d =='6') || (d == '7') || (d == '21') || (d == '22') ? "#48BEFF" : //north side
+  
+        (d == '1') || (d =='2') || (d == '3') || (d == '4') || (d =='9') || (d == '10') || (d == '11') || (d =='12') || (d == '13') || (d == '14') || (d == '76')|| (d == '77') ? "#48BEFF" : //far north side
+  
+        (d == '15') || (d =='16') || (d == '17') || (d == '18') || (d =='19') || (d == '20') ? "#586BA4" : //northwest side
+  
+          (d == '23') || (d =='24') || (d == '25') || (d == '26') || (d =='27') || (d == '28') || (d == '29') || (d =='30') || (d == '31') ? "#3DFAFF" : //west side
+  
+          (d == '34') || (d =='35') || (d == '36') || (d == '37') || (d =='38') || (d == '39') || (d == '40') || (d =='41') || (d == '42') || (d == '43') || (d == '60')|| (d == '69') ? "#8A1C7C" : //south side
+  
+          (d == '56') || (d =='57') || (d == '58') || (d == '59') || (d =='61') || (d == '62') || (d == '63') || (d =='64') || (d == '65') || (d == '66') || (d == '67')|| (d == '68') ? "#3D7068" : //southwest side
+  
+          (d == '44') || (d =='45') || (d == '46') || (d == '47') || (d =='48') || (d == '49') || (d == '50') || (d =='51') || (d == '52') || (d == '53') || (d == '54')|| (d == '55') ? "#DA4167" : //far southeast side
+  
+          (d == '70') || (d =='71') || (d == '72') || (d =='73') || (d == '74') || (d == '75') ? "#4C061D" : //far southwest side
+        "#FFFFFF"; //white
+}
+
 function style(feature) {
+    return {
+        fillColor: getColor(feature.properties.area_numbe),
+        weight: 1,
+        opacity: 1,
+        color: 'white',
+        dashArray: '2',
+        fillOpacity: 0.7
+    };
+}
+var geojsonLayer2 = new L.GeoJSON.AJAX(myURL2, {
+    style: style,
+  onEachFeature: function (feature, layer) { 
+    layer.bindPopup(feature.properties.community);
+    layer.bindTooltip(feature.properties.community);
+    }
+  
+}).addTo(map);
+/*function style(feature) {
     return {
         fillColor: '#808080',
         weight: 2,
@@ -191,8 +299,8 @@ function style(feature) {
         dashArray: '1',
         fillOpacity: 0.5
     };
-}
-var geojsonLayer2 = new L.GeoJSON.AJAX(myURL2, {
+}*/
+/*var geojsonLayer2 = new L.GeoJSON.AJAX(myURL2, {
     style: style,
   onEachFeature: function (feature, layer) {
       
@@ -200,8 +308,31 @@ var geojsonLayer2 = new L.GeoJSON.AJAX(myURL2, {
     layer.bindTooltip(feature.properties.community);
     }
   
-}).addTo(map);
+}).addTo(map);*/
+    
+//Create Legend
+var legend = L.control({
+  position: 'bottomright'
+});
 
+legend.onAdd = function(map) {
+
+  var div = L.DomUtil.create('div', 'info legend'),
+    pop_size = [8, 5, 1, 15, 23, 34, 56, 44, 70],
+    labels = ['Central', 'North Side', 'Far North side', 'Northwest side', 'West Side', 'South side', 'Southwest side', 'Far Southeast side', 'Far Southwest side'];
+
+  
+   div.innerHTML += "<strong>County Population</strong><br>";
+  // loop through items and generate a label with a colored square for each
+  for (var i = 0; i < pop_size.length; i++) {
+    div.innerHTML +=
+      '<i style="background:' + getColor(pop_size[i] ) + ' "></i> ' +
+       labels[i]+'<br>';
+  }
+
+  return div;
+};
+legend.addTo(map);
 
 
     
