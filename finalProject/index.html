@@ -38,7 +38,7 @@
    
    #map {
      width: 700px;
-     height: 600px;
+     height: 700px;
   }
    .link-center {
     text-align: center;
@@ -60,7 +60,7 @@
     height: 20px;
     float: left;
     margin-right: 8px;
-    opacity: 0.9;
+    opacity: 0.8;
 }
     .info {
         padding: 6px 8px;
@@ -75,13 +75,15 @@
 <body>
   <div class="container">
     <div class="row">
-      <nav class="navbar navbar-inverse">
-     <h3 class="pull-right text-muted titleHead">Final Project</h3>
+      <nav class="navbar navbar-default">
+     <h1 class="titleHead">Chicago Public Libraries <small>| Final Project</small> <img src="img/cplLogo.PNG" class="img-responsive pull-right" width="6%" height="6%" style="margin-bottom:10px;"></h1>
+           
       </nav>
     </div>
      <div class="row">
          <div class="col-md-12">
-             <h1>Libraries in Chicago</h1>
+            
+             
          </div>
     <div class="row">
       <div class="col-md-7">
@@ -89,18 +91,21 @@
         
       </div><!--end col-sm-6-->
         <div class="col-md-5 pull-right">
-            <div class="panel panel-success" style="margin-left:20px;">
-              <div class="panel-heading">About This Data</div>
+            <div class="panel panel-info" style="margin-left:20px;">
+              <div class="panel-heading">History of this data</div>
               <div class="panel-body">
-                
+                <p>The Chicago Public Library (CPL) is a public library system made up 80 locations, including a central library, two regional libraries, and branches distributed throughout Chicago's 77 community neighborhood areas. </p>
+                <p>The CPL holds 5,721,334 volumes making it the 9th largest public library in the United States by volumes held &ndash; a pretty large feat considering the devestation that occured to libraries as a result of the Great Chicago Fire in 1871. </p>
+                  <p>Chicago is made up of 9 different "sides" (North, West, Central, etc. as shown in the map), and divided by 77 officially recognized areas. This is distinct from neighborhoods, as community areas include groups of neighborhoods.</p>
               </div>
             </div>
-            <div class="panel panel-success" style="margin-left:20px;">
-              <div class="panel-heading">Fun Facts</div>
+            <div class="panel panel-info" style="margin-left:20px;">
+              <div class="panel-heading">Filter Data</div>
               <div class="panel-body">
                  <div class="row">
                    <div class="col-sm-12 " style="margin-bottom: 20px;">
-                     <label class="control-label">Select Neighborhood </label>
+                       <p>Clicking the library icon will show hours and location of each library, and clicking the map tiles will alternate basemap views to items like traffic and satellite views.</p>
+                     <label class="control-label">View libraries by community:</label>
                        <select class="form-control" id="viewNeighborhood">
                        <option id="nothing">Select</option>
                            <option value="41.97, -87.72">Albany Park Community</option>
@@ -140,28 +145,28 @@
                            <option value="41.95, -87.73">Irving Park Community</option>
                            <option value="41.98, -87.77">Jefferson Park Community</option>
                            <option value="41.81, -87.6">Kenwood Community</option>
-                           <option value="">Lake View Community</option>
-                           <option value="">Lincoln Park Community</option>
+                           <option value="41.94352, -87.654102">Lake View Community</option>
+                           <option value="41.95, -87.64">Lincoln Park Community</option>
                            <option value="41.97, -87.69">Lincoln Square Community</option>
-                           <option value="">Logan Square Community</option>
-                           <option value="">Loop Community</option>
-                           <option value="">Lower West Side Community</option>
-                           <option value="">McKinley Park Community</option>
+                           <option value="41.928333, -87.706667">Logan Square Community</option>
+                           <option value="41.883333, -87.633333">Loop Community</option>
+                           <option value="41.85, -87.66">Lower West Side Community</option>
+                           <option value="41.83, -87.67">McKinley Park Community</option>
                            <option value="41.93, -87.8">Montclare Community</option>
-                           <option value="">Morgan Park Community</option>
-                           <option value="">Mount Greenwood Community</option>
-                           <option value="">Near North Side Community</option>
-                           <option value="">Near South Side Community</option>
-                           <option value="">Near West Side Community</option>
-                           <option value="">New City Community</option>
-                           <option value="">North Center Community</option>
-                           <option value="">North Lawndale Community</option>
+                           <option value="41.69, -87.67">Morgan Park Community</option>
+                           <option value="41.7, -87.71">Mount Greenwood Community</option>
+                           <option value="41.9, -87.63">Near North Side Community</option>
+                           <option value="41.85, -87.62">Near South Side Community</option>
+                           <option value="41.87, -87.67">Near West Side Community</option>
+                           <option value="41.81, -87.66">New City Community</option>
+                           <option value="41.95, -87.68">North Center Community</option>
+                           <option value="41.86, -87.71">North Lawndale Community</option>
                            <option value="41.95, -87.68">North Park Community</option>
-                           <option value="">Norwood Park Community</option>
+                           <option value="41.98, -87.8">Norwood Park Community</option>
                            <option value="41.82, -87.6">Oakland Community</option>
-                           <option value="">Ohare Community</option>
+                           <option value="42, -87.92">Ohare Community</option>
                            <option value="41.95, -87.76">Portage Park Community</option>
-                           <option value="">Pullman Community</option>
+                           <option value="41.71, -87.62">Pullman Community</option>
                            <option value="42.01, -87.67">Riverdale Community</option>
                            <option value="42.01, -87.67">Rogers Park Community</option>
                            <option value="">Roseland Community</option>
@@ -185,10 +190,10 @@
                  </div>
                   <div class="row">
                     <div class="col-sm-12">
-                        <label class="control-label">Overall Data</label>
+                        <label class="control-label">Walk Score Data</label>
                         <div class="text-center">
-                      <button type="button" class="btn btn-success" id="largest">View Largest </button>
-                      <button type="button" class="btn btn-success" id="visit">View Most Visited </button>
+                      <!--<button type="button" class="btn btn-success" id="largest">View Largest </button>
+                      <button type="button" class="btn btn-success" id="visit">View Most Visited </button>-->
                         </div>
                     </div>
                   </div>
@@ -212,18 +217,14 @@ var data;
         attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors',
         maxZoom: 18
     });
-    var Esri_WorldStreetMap =
-      L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
-        attribution: 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012'
+    var traffic = L.tileLayer('https://api.mapbox.com/styles/v1/anderbar/cj1s938td000s2snwqi7p4tlf/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYW5kZXJiYXIiLCJhIjoiY2oxY3U4MWRsMDA2ZjJ6cGRkc2Rnbnk0dCJ9.HMKO48WdOuov0_6EdnQfKA', {
+    attribution: 'Bailey - Traffic'
     });
-    var Esri_NatGeoWorldMap =
-        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}', {
-          attribution: 'Tiles &copy; Esri &mdash; National Geographic, Esri, DeLorme, NAVTEQ, UNEP-WCMC, USGS, NASA, ESA, METI, NRCAN, GEBCO, NOAA, iPC',
-          maxZoom: 16
+     var sat = L.tileLayer('https://api.mapbox.com/styles/v1/anderbar/cj1s9loja000x2st26kz3v2vd/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYW5kZXJiYXIiLCJhIjoiY2oxY3U4MWRsMDA2ZjJ6cGRkc2Rnbnk0dCJ9.HMKO48WdOuov0_6EdnQfKA', {
+    attribution: 'Bailey - Satellite'
     });
     
-    
-        
+      
     
 
  // Create map
@@ -243,20 +244,44 @@ var libIcon = L.AwesomeMarkers.icon({
   icon: 'fa-university' //http://fortawesome.github.io/Font-Awesome/icons/
 });
    
+/*var geojsonLayer = new L.GeoJSON.AJAX(myURL, {
+  pointToLayer: function(feature, latlng) {
+      return L.marker(latlng, {
+        icon: libIcon
+      }).on('click', function(e) {
+        map.setView(e.latlng,20);
+        this.bindPopup("<strong>" + feature.properties.name + " Library </strong> <br>"+ feature.properties.address + "<br><strong>Hours:</strong> <br>M - </strong>" + feature.properties.hours.m + "<br>Tu - " + feature.properties.hours.tu + "<br>W - " + feature.properties.hours.w + "<br>Th - " + feature.properties.hours.th + "<br>F - " + feature.properties.hours.f + "<br>Sat - " + feature.properties.hours.sa + "<br>Sun - " + feature.properties.hours.su + "<br><a href='#' id='libZoom'>Street View</a>").openPopup();
+      });
+    }
+  
+}).addTo(map);*/
 var geojsonLayer = new L.GeoJSON.AJAX(myURL, {
   pointToLayer: function(feature, latlng) {
       return L.marker(latlng, {
         icon: libIcon
       }).on('click', function() {
-        this.bindPopup(feature.properties.name + " library <br> Address: "+ feature.properties.address + "<br> Hours:" + feature.properties.hours.m).openPopup();
+        this.bindPopup("<strong>" + feature.properties.name + " Library </strong> <br>"+ feature.properties.address + "<br><strong>Hours:</strong> <br>M - </strong>" + feature.properties.hours.m + "<br>Tu - " + feature.properties.hours.tu + "<br>W - " + feature.properties.hours.w + "<br>Th - " + feature.properties.hours.th + "<br>F - " + feature.properties.hours.f + "<br>Sat - " + feature.properties.hours.sa + "<br>Sun - " + feature.properties.hours.su).openPopup();
       });
     }
   
 }).addTo(map);
-    
-
 
 myURL2 = 'https://anderbar68.github.io/LA558/finalProject/boundary.geojson';
+    
+function style2(feature) {
+    return {
+        fillColor: false,
+        weight: 2,
+        opacity: 1,
+        color: '#2F4F4F',
+        dashArray: '1',
+        fillOpacity: 0
+    };
+}
+var geojsonLayer3 = new L.GeoJSON.AJAX(myURL2, {
+    style: style2
+}).addTo(map);
+
 //set color of marker
 function getColor(d) {
   return (d == '8') || (d =='32') || (d == '33') ? '#87CEEB' : //central 
@@ -284,19 +309,20 @@ function style(feature) {
         fillColor: getColor(feature.properties.area_numbe),
         weight: 2,
         opacity: 1,
-        color: 'white',
+        color: '#2F4F4F',
         dashArray: '1',
-        fillOpacity: 0.7
+        fillOpacity: 0.4
     };
 }
 var geojsonLayer2 = new L.GeoJSON.AJAX(myURL2, {
     style: style,
   onEachFeature: function (feature, layer) { 
-    layer.bindPopup(feature.properties.community);
-    layer.bindTooltip(feature.properties.community);
+    layer.bindPopup(feature.properties.community + "Community");
+    layer.bindTooltip(feature.properties.community + "Community");
     }
   
 }).addTo(map);
+
 
     
 //Create Legend
@@ -327,12 +353,31 @@ legend.addTo(map);
     
 // Layer control
     var baseMaps = {
-      "OpenStreetMap": OSM,
-      "Esri_WorldStreetMap": Esri_WorldStreetMap,
-      "Esri_NatGeoWorldMap": Esri_NatGeoWorldMap,
+      "Open Street Map": OSM,
+        "Traffic View": traffic,
+        "Satellite View": sat,
     };  
+    
+    var overlayMaps = {
+	"'Sides' of Chicago": geojsonLayer2,
+};
    
-    L.control.layers(baseMaps).addTo(map);
+    L.control.layers(baseMaps, overlayMaps).addTo(map);
+    
+    // Add and remove legend from layers when selected in control
+map.on('overlayremove', function (eventLayer) {
+	console.log(eventLayer.name  + " off");
+	if (eventLayer.name == "'Sides' of Chicago") {
+		this.removeControl(legend);
+	}
+});
+
+map.on('overlayadd', function (eventLayer) {
+	console.log(eventLayer.name + " on");
+	if (eventLayer.name == "'Sides' of Chicago") {
+		 legend.addTo(this);
+	}	
+});
 
 //change neighborhood view
 $("#viewNeighborhood").change(function() {
