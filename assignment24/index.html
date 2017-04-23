@@ -2,7 +2,7 @@
 <html>
 <head>
 
-<title>Anderson Assignment 23</title>
+<title>Anderson Assignment 24</title>
     <!--External Data-->	
 <script src="https://indicator.extension.iastate.edu/z_cjs/teachingGIS/webGIS_17/studentFeaturesDB.php?userID=anderbar&theFunction=responseVar"></script>
 <!-- Latest compiled and minified CSS -->
@@ -67,13 +67,13 @@
   <div class="container">
     <div class="row">
       <nav class="navbar navbar-inverse">
-     <h3 class="pull-right text-muted titleHead">Assignment 23</h3>
+     <h3 class="pull-right text-muted titleHead">Assignment 24</h3>
       </nav>
     </div>
     <div class="row">
-      <div class="col-md-8 col-md-offset-3 ">
-          <h2 class="title2">Bike Trails in Central Des Moines</h2>
-        <div id="map">
+      <div class="col-md-12">
+          <h2 class="title2">Intro to Carto</h2>
+        <iframe width="100%" height="520" frameborder="0" src="https://anderbar68.carto.com/builder/1418f19e-282d-11e7-959b-0ef7f98ade21/embed" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
         </div>
         
       </div><!--end col-sm-6-->
@@ -85,31 +85,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script>
 
-    var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-});
-
-var trails = L.tileLayer('http://mapwarper.net/maps/tile/20202/{z}/{x}/{y}.png', {
-  attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-    
-});
-
-var map = L.map('map', {
-    center: [41.590833, -93.620833],
-    zoom: 13,
-    layers: [osm, trails]
-});
-
-var baseMaps = {
-    "OpenStreetMap": osm,
-	
-};
-
-var overlayMaps = {
-    "Trails of Central Des Moines": trails
-};
-L.control.layers(baseMaps, overlayMaps).addTo(map);
-
+   
 
 </script>
 </html>
